@@ -1,0 +1,41 @@
+{
+  "name": "vite-vue",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint --ext .vue,.js ./",
+    "lint:fix": "eslint --fix --ext .vue,.js ./",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "vant": "^3.4.5",
+    "vue": "^3.2.25",
+    "vue-router": "4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.2.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^8.10.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "^8.5.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.5",
+    "prettier": "^2.5.1",
+    "sass": "^1.49.9",
+    "vite": "^2.8.0",
+    "vite-plugin-style-import": "1.4.1"
+  },
+  "lint-staged": {
+    "*.{js,vue,ts,jsx,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{html,css,less,scss,md}": [
+      "prettier --write"
+    ]
+  }
+}
