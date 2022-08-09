@@ -1,13 +1,5 @@
-import {
-  Button,
-  Tab,
-  Form,
-  Col,
-  Row
-} from 'vant'
+import { Button, Col, Row } from "vant";
 function registerComponent(app) {
-  app.use(Button).use(Col).use(Row)
+  app.use(Button).use(Col).use(Row);
 }
-export default registerComponent
-
-
+export default registerComponent;

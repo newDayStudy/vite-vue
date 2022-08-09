@@ -1,18 +1,19 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, defineProps } from "vue";
 
 defineProps({
   msg: {
     type: String,
-    default: 'hello world Vite'
-  }
-})
+    default: "hello world Vite",
+  },
+});
 
-const count = ref(0)
+const count = ref(0);
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
+  <h1>{{ count }}</h1>
 </template>
 
 <style scoped>
