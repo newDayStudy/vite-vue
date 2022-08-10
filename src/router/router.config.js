@@ -1,5 +1,9 @@
 export default [
   {
+    path: "",
+    redirect: "/home",
+  },
+  {
     path: "/hello",
     component: () => import("@/components/HelloWorld.vue"),
   },

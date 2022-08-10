@@ -36,36 +36,6 @@ const state = reactive({
       age: 42,
       address: "西湖区湖底公园1号",
     },
-    // {
-    //   key: "6",
-    //   name: "胡彦斌",
-    //   age: 32,
-    //   address: "西湖区湖底公园1号",
-    // },
-    // {
-    //   key: "7",
-    //   name: "胡彦祖",
-    //   age: 42,
-    //   address: "西湖区湖底公园1号",
-    // },
-    // {
-    //   key: "8",
-    //   name: "胡彦祖",
-    //   age: 42,
-    //   address: "西湖区湖底公园1号",
-    // },
-    // {
-    //   key: "9",
-    //   name: "胡彦祖",
-    //   age: 42,
-    //   address: "西湖区湖底公园1号",
-    // },
-    // {
-    //   key: "10",
-    //   name: "胡彦祖",
-    //   age: 42,
-    //   address: "西湖区湖底公园1号",
-    // },
   ],
   columns: [
     {
@@ -109,8 +79,8 @@ const state = reactive({
     {
       key: "username",
       formItemProps: {
-        label: "用户名",
-        rules: [{ required: true, message: "请输入用户名" }],
+        label: "姓名",
+        rules: [{ required: true, message: "请输入姓名" }],
       },
       defaultValue: "",
       type: "Input",
@@ -120,10 +90,10 @@ const state = reactive({
       },
     },
     {
-      key: "password",
+      key: "age",
       formItemProps: {
-        label: "密码",
-        rules: [{ required: true, message: "请输入密码" }],
+        label: "年龄",
+        rules: [{ required: true, message: "请输入年龄" }],
       },
       defaultValue: "",
       type: "Input",
@@ -138,7 +108,7 @@ const state = reactive({
         label: "性别",
         rules: [{ required: true, message: "请选择性别" }],
       },
-      defaultValue: "0",
+      defaultValue: "",
       type: "Select",
       slotProps: {
         placeholder: "请选择",
