@@ -12,7 +12,7 @@ module.exports = {
   },
   extends: [
     "plugin:vue/vue3-essential",
-    "plugin:vue/vue3-recommended",
+    "plugin:vue/vue3-recommended", // 解决vue3中不需要定义的变量提交会被阻拦 no-undef
     // "eslint:recommended",
     "plugin:prettier/recommended",
   ],
