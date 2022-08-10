@@ -36,6 +36,7 @@ module.exports = {
     "no-empty-function": 1, // 禁止出现空函数
     "no-multi-spaces": 1, // 禁止使用多个空格
     radix: 1, // 强制在parseInt()使用基数参数
+    eqeqeq: ["off"],
     /**
      * 变量声明
      */

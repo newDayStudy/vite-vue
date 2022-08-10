@@ -1,7 +1,8 @@
 <script setup>
-import { reactive, ref, unref } from "vue";
+import { reactive, ref, unref, h } from "vue";
 import Table from "@/components/table/Table.vue";
 import Form from "@/components/form/Form.vue";
+import { Button } from "ant-design-vue";
 const tableRef = ref();
 const state = reactive({
   dataSource: [
@@ -81,6 +82,27 @@ const state = reactive({
       title: "住址",
       dataIndex: "address",
       key: "address",
+    },
+    {
+      title: "操作",
+      dataIndex: "action",
+      customRender({ text, record, index, column }) {
+        return h(
+          Button,
+          {
+            size: "small",
+            type: "primary",
+            onClick(e) {
+              e.stopPropagation();
+              alert("删除行的下标" + index);
+              state.dataSource = state.dataSource.filter(
+                (item, i) => i != index
+              );
+            },
+          },
+          () => h("span", "删除")
+        );
+      },
     },
   ],
   formItems: [
@@ -172,7 +194,8 @@ const selections = reactive([
       selected-type="checkbox"
       :selections="selections"
       @change="change"
-    />
+    >
+    </Table>
   </a-layout>
 </template>
 

@@ -73,6 +73,15 @@ const rowSelection = computed(() => {
   return baseRowSelection;
 });
 
+const customRow = (record, index) => {
+  return {
+    onClick(e) {
+      e.stopPropagation();
+      console.log(record, index);
+    },
+  };
+};
+
 defineExpose({
   selectedRowKeys: toRaw(baseRowSelection),
 });
@@ -86,8 +95,10 @@ defineExpose({
     :data-source="dataSource"
     :pagination="mergePagination"
     :row-selection="rowSelection"
+    :custom-row="customRow"
     @change="onChange"
   >
+    <slot></slot>
   </a-table>
 </template>
 
