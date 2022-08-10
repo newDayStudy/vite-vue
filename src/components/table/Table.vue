@@ -1,5 +1,5 @@
 <script setup>
-import { ref, unref, computed, reactive } from "vue";
+import { computed, reactive, toRaw, unref } from "vue";
 const props = defineProps({
   columns: {
     type: Array,
@@ -27,7 +27,7 @@ const props = defineProps({
   },
 });
 const emits = defineEmits(["change"]);
-const basePagition = ref({
+const basePagition = reactive({
   current: 1,
   pageSize: 5,
   size: "small",
@@ -42,15 +42,15 @@ const mergePagination = computed(() => {
   return typeof props.pagination === "boolean"
     ? false
     : {
-        ...unref(basePagition),
-        ...unref(props.pagination),
+        ...toRaw(basePagition),
+        ...toRaw(props.pagination),
       };
 });
 
 const onChange = (pagination) => {
   basePagition.value = {
-    ...unref(basePagition.value),
-    ...unref(pagination),
+    ...toRaw(basePagition.value),
+    ...toRaw(pagination),
   };
   emits("change", unref(mergePagination));
 };
@@ -63,18 +63,18 @@ const baseRowSelection = reactive({
   selectedRowKeys: [],
   type: props.selectedType,
   onChange: onRowSelection,
-  selections: unref(props.selections),
+  selections: toRaw(props.selections),
 });
 
 const rowSelection = computed(() => {
   if (typeof props.selectedType === "boolean") {
     return false;
   }
-  return unref(baseRowSelection);
+  return baseRowSelection;
 });
 
 defineExpose({
-  selectedRowKeys: unref(baseRowSelection),
+  selectedRowKeys: toRaw(baseRowSelection),
 });
 </script>
 
