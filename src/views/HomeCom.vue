@@ -1,7 +1,8 @@
 <script setup>
-import { reactive } from "vue";
+import { reactive, ref, unref } from "vue";
 import Table from "@/components/table/Table.vue";
 import Form from "@/components/form/Form.vue";
+const tableRef = ref();
 const state = reactive({
   dataSource: [
     {
@@ -12,28 +13,58 @@ const state = reactive({
     },
     {
       key: "2",
-      name: "胡彦祖",
+      name: "胡彦祖2",
       age: 42,
       address: "西湖区湖底公园1号",
     },
     {
       key: "3",
-      name: "胡彦祖",
+      name: "胡彦祖3",
       age: 42,
       address: "西湖区湖底公园1号",
     },
     {
       key: "4",
-      name: "胡彦祖",
+      name: "胡彦祖4",
       age: 42,
       address: "西湖区湖底公园1号",
     },
     {
       key: "5",
-      name: "胡彦祖",
+      name: "胡彦祖5",
       age: 42,
       address: "西湖区湖底公园1号",
     },
+    // {
+    //   key: "6",
+    //   name: "胡彦斌",
+    //   age: 32,
+    //   address: "西湖区湖底公园1号",
+    // },
+    // {
+    //   key: "7",
+    //   name: "胡彦祖",
+    //   age: 42,
+    //   address: "西湖区湖底公园1号",
+    // },
+    // {
+    //   key: "8",
+    //   name: "胡彦祖",
+    //   age: 42,
+    //   address: "西湖区湖底公园1号",
+    // },
+    // {
+    //   key: "9",
+    //   name: "胡彦祖",
+    //   age: 42,
+    //   address: "西湖区湖底公园1号",
+    // },
+    // {
+    //   key: "10",
+    //   name: "胡彦祖",
+    //   age: 42,
+    //   address: "西湖区湖底公园1号",
+    // },
   ],
   columns: [
     {
@@ -109,20 +140,46 @@ const state = reactive({
 });
 
 const submit = (values) => {
-  console.log(values);
+  console.log("表单数据", values);
 };
+
+const change = (pagination) => {
+  console.log("页码：", pagination.current);
+};
+const deleteRow = () => {
+  const { selectedRowKeys } = unref(tableRef).selectedRowKeys;
+  state.dataSource = state.dataSource.filter(
+    (item) => !selectedRowKeys.includes(item.key)
+  );
+};
+const selections = reactive([
+  {
+    text: "删除",
+    key: "delete",
+    onSelect: deleteRow,
+  },
+]);
 </script>
 
 <template>
   <a-layout class="a-layout">
-    <Table :data-source="state.dataSource" :columns="state.columns">
-      <Form :item-list="state.formItems" @submit="submit"> </Form>
-    </Table>
+    <Form :item-list="state.formItems" @submit="submit" />
+    <Table
+      ref="tableRef"
+      row-key="key"
+      :data-source="state.dataSource"
+      :columns="state.columns"
+      selected-type="checkbox"
+      :selections="selections"
+      @change="change"
+    />
   </a-layout>
 </template>
 
 <style lang="scss" scoped>
 .a-layout {
+  box-sizing: border-box;
   height: 100%;
+  padding: 30px;
 }
 </style>
