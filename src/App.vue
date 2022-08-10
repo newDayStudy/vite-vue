@@ -1,17 +1,24 @@
 <script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
+import zhCN from "ant-design-vue/es/locale/zh_CN";
 </script>
 
 <template>
-  <router-view></router-view>
+  <a-config-provider :locale="zhCN">
+    <router-view></router-view>
+  </a-config-provider>
 </template>
 
 <style>
-#app {
+html,
+body {
+  height: 100%;
+  width: 100%;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+#app {
+  height: 100%;
 }
 </style>

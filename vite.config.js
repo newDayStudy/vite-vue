@@ -1,6 +1,10 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import styleImport, { VantResolve } from "vite-plugin-style-import";
+import {
+  createStyleImportPlugin,
+  VantResolve,
+  AndDesignVueResolve,
+} from "vite-plugin-style-import";
 import path from "path";
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -8,9 +12,14 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "src"),
     },
-    extensions: [".json", ".vue", ".js"],
+    extensions: [".json", ".vue", ".js", ".jsx"],
   },
   css: {
+    preprocessorOptions: {
+      less: {
+        javascriptEnabled: true,
+      },
+    },
     postcss: {
       plugins: [
         require("autoprefixer")({
@@ -30,8 +39,8 @@ export default defineConfig({
   },
   plugins: [
     vue(),
-    styleImport({
-      resolves: [VantResolve()],
+    createStyleImportPlugin({
+      resolves: [VantResolve(), AndDesignVueResolve()],
     }),
   ],
 });

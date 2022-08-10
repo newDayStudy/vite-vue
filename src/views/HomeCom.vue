@@ -1,0 +1,128 @@
+<script setup>
+import { reactive } from "vue";
+import Table from "@/components/table/Table.vue";
+import Form from "@/components/form/Form.vue";
+const state = reactive({
+  dataSource: [
+    {
+      key: "1",
+      name: "胡彦斌",
+      age: 32,
+      address: "西湖区湖底公园1号",
+    },
+    {
+      key: "2",
+      name: "胡彦祖",
+      age: 42,
+      address: "西湖区湖底公园1号",
+    },
+    {
+      key: "3",
+      name: "胡彦祖",
+      age: 42,
+      address: "西湖区湖底公园1号",
+    },
+    {
+      key: "4",
+      name: "胡彦祖",
+      age: 42,
+      address: "西湖区湖底公园1号",
+    },
+    {
+      key: "5",
+      name: "胡彦祖",
+      age: 42,
+      address: "西湖区湖底公园1号",
+    },
+  ],
+  columns: [
+    {
+      title: "姓名",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "年龄",
+      dataIndex: "age",
+      key: "age",
+    },
+    {
+      title: "住址",
+      dataIndex: "address",
+      key: "address",
+    },
+  ],
+  formItems: [
+    {
+      key: "username",
+      formItemProps: {
+        label: "用户名",
+        rules: [{ required: true, message: "请输入用户名" }],
+      },
+      defaultValue: "",
+      type: "Input",
+      slotProps: {
+        placeholder: "请输入",
+        allowClear: true,
+      },
+    },
+    {
+      key: "password",
+      formItemProps: {
+        label: "密码",
+        rules: [{ required: true, message: "请输入密码" }],
+      },
+      defaultValue: "",
+      type: "Input",
+      slotProps: {
+        placeholder: "请输入",
+        allowClear: true,
+      },
+    },
+    {
+      key: "sex",
+      formItemProps: {
+        label: "性别",
+        rules: [{ required: true, message: "请选择性别" }],
+      },
+      defaultValue: "0",
+      type: "Select",
+      slotProps: {
+        placeholder: "请选择",
+        allowClear: true,
+        style: {
+          width: "200px",
+        },
+        options: [
+          {
+            label: "男",
+            value: "0",
+          },
+          {
+            label: "女",
+            value: "1",
+          },
+        ],
+      },
+    },
+  ],
+});
+
+const submit = (values) => {
+  console.log(values);
+};
+</script>
+
+<template>
+  <a-layout class="a-layout">
+    <Table :data-source="state.dataSource" :columns="state.columns">
+      <Form :item-list="state.formItems" @submit="submit"> </Form>
+    </Table>
+  </a-layout>
+</template>
+
+<style lang="scss" scoped>
+.a-layout {
+  height: 100%;
+}
+</style>

@@ -1,5 +1,8 @@
-import { Button, Col, Row } from "vant";
+import antdRegisterComponent from "./Antd";
+import vantRegisterComponent from "./Vant";
+
 function registerComponent(app) {
-  app.use(Button).use(Col).use(Row);
+  antdRegisterComponent(app);
+  vantRegisterComponent(app);
 }
 export default registerComponent;
