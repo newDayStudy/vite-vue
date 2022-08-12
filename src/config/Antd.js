@@ -11,6 +11,7 @@ import {
   Card,
   DatePicker,
   Divider,
+  Modal,
 } from "ant-design-vue";
 function antdRegisterComponent(app) {
   app
@@ -25,6 +26,7 @@ function antdRegisterComponent(app) {
     .use(Card)
     .use(DatePicker)
     .use(Divider)
+    .use(Modal)
     .use(Table);
 }
 export default antdRegisterComponent;

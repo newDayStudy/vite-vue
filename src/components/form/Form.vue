@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, reactive, ref } from "vue";
+import { computed, onMounted, reactive, ref, toRaw } from "vue";
 import components from "./FormItem";
 const props = defineProps({
   itemList: {
@@ -15,12 +15,18 @@ const props = defineProps({
       };
     },
   },
+  footer: {
+    type: Boolean,
+    default: true,
+  },
 });
 const emits = defineEmits(["submit"]);
 const ruleForm = reactive({});
 const formRef = ref();
 const formItems = computed(() => {
-  return props.itemList.map((item) => {
+  const itemList = toRaw(props.itemList);
+  const list = JSON.parse(JSON.stringify(itemList));
+  return reactive(list).map((item) => {
     item.type = components.get(item.type);
     return item;
   });
@@ -75,7 +81,7 @@ defineExpose({
       ></component>
     </a-form-item>
     <slot>
-      <a-form-item>
+      <a-form-item v-if="footer">
         <a-button type="primary" @click="onsubmit">查询</a-button>
         <a-button style="margin-left: 10px" @click="onreset">重置</a-button>
       </a-form-item>

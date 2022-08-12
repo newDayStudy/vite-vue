@@ -3,39 +3,49 @@ import { reactive, ref, unref, h } from "vue";
 import Table from "@/components/table/Table.vue";
 import Form from "@/components/form/Form.vue";
 import Calendar from "@/components/calender";
+import Modal from "@/components/modal";
 import { Button } from "ant-design-vue";
 import { getDateObj, zeroFill } from "../components/calender/utils";
+import { useModal } from "@/components/modal/hooks/useModal";
+const [register, { open }] = useModal();
+
 const tableRef = ref();
+const formRef = ref();
 const state = reactive({
   dataSource: [
     {
       key: "1",
       name: "胡彦斌",
       age: 32,
+      sex: "1",
       address: "西湖区湖底公园1号",
     },
     {
       key: "2",
       name: "胡彦祖2",
       age: 42,
+      sex: "1",
       address: "西湖区湖底公园1号",
     },
     {
       key: "3",
       name: "胡彦祖3",
       age: 42,
+      sex: "0",
       address: "西湖区湖底公园1号",
     },
     {
       key: "4",
       name: "胡彦祖4",
       age: 42,
+      sex: "0",
       address: "西湖区湖底公园1号",
     },
     {
       key: "5",
       name: "胡彦祖5",
       age: 42,
+      sex: "1",
       address: "西湖区湖底公园1号",
     },
   ],
@@ -59,21 +69,38 @@ const state = reactive({
       title: "操作",
       dataIndex: "action",
       customRender({ text, record, index, column }) {
-        return h(
-          Button,
-          {
-            size: "small",
-            type: "primary",
-            onClick(e) {
-              e.stopPropagation();
-              alert("删除行的下标" + index);
-              state.dataSource = state.dataSource.filter(
-                (item, i) => i != index
-              );
+        return h("div", [
+          h(
+            Button,
+            {
+              size: "small",
+              type: "primary",
+              style: {
+                "margin-right": "10px",
+              },
+              onClick(e) {
+                e.stopPropagation();
+                open(record);
+              },
             },
-          },
-          () => h("span", "删除")
-        );
+            () => h("span", "编辑")
+          ),
+          h(
+            Button,
+            {
+              size: "small",
+              type: "primary",
+              onClick(e) {
+                e.stopPropagation();
+                alert("删除行的下标" + index);
+                state.dataSource = state.dataSource.filter(
+                  (item, i) => i != index
+                );
+              },
+            },
+            () => h("span", "删除")
+          ),
+        ]);
       },
     },
   ],
@@ -159,6 +186,15 @@ const onCalendar = (dayObj) => {
 };
 const { year, month, day } = getDateObj();
 const date = ref(year + "-" + zeroFill(month) + "-" + zeroFill(day));
+
+const callback = async () => {
+  try {
+    const values = await unref(formRef).formRef.validateFields();
+    console.log(values);
+  } catch (errorInfo) {
+    console.log("Failed:", errorInfo);
+  }
+};
 </script>
 
 <template>
@@ -186,6 +222,10 @@ const date = ref(year + "-" + zeroFill(month) + "-" + zeroFill(day));
       />
       <Calendar v-model:date="date" @click="onCalendar" />
     </a-card>
+
+    <Modal title="模态框" width="50%" :submit="callback" @register="register">
+      <Form ref="formRef" :item-list="state.formItems" :footer="false" />
+    </Modal>
   </a-layout>
 </template>
 
