@@ -8,6 +8,7 @@ import {
   Input,
   Form,
   Table,
+  Card,
 } from "ant-design-vue";
 function antdRegisterComponent(app) {
   app
@@ -19,6 +20,7 @@ function antdRegisterComponent(app) {
     .use(Checkbox)
     .use(Input)
     .use(Form)
+    .use(Card)
     .use(Table);
 }
 export default antdRegisterComponent;

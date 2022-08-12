@@ -98,7 +98,6 @@ defineExpose({
     :custom-row="customRow"
     @change="onChange"
   >
-    <slot></slot>
   </a-table>
 </template>
 

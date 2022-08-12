@@ -2,6 +2,7 @@
 import { reactive, ref, unref, h } from "vue";
 import Table from "@/components/table/Table.vue";
 import Form from "@/components/form/Form.vue";
+import Calendar from "@/components/calender";
 import { Button } from "ant-design-vue";
 const tableRef = ref();
 const state = reactive({
@@ -151,6 +152,10 @@ const selections = reactive([
     onSelect: deleteRow,
   },
 ]);
+
+const onCalendar = (dayObj) => {
+  console.log(dayObj);
+};
 </script>
 
 <template>
@@ -166,6 +171,9 @@ const selections = reactive([
       @change="change"
     >
     </Table>
+    <a-card>
+      <Calendar @click="onCalendar" />
+    </a-card>
   </a-layout>
 </template>
 
