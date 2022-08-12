@@ -30,14 +30,6 @@ const $props = defineProps({
   },
 });
 
-const successArr = computed(() => {
-  return $props.success.map((item) => getDateObj(item).day);
-});
-
-const errorArr = computed(() => {
-  return $props.error.map((item) => getDateObj(item).day);
-});
-
 const days = computed(() => {
   const days = getDate($props.date);
   const week = getDay($props.date);
@@ -54,7 +46,7 @@ const days = computed(() => {
   return copyArr.map((item) => {
     return {
       label: item,
-      value: year + "-" + zeroFill(month) + "-" + zeroFill(item),
+      value: year + "-" + zeroFill(month + 1) + "-" + zeroFill(item),
     };
   });
 });
@@ -85,8 +77,8 @@ const onClickDay = (dayObj) => {
         :key="index"
         class="calender-block-name"
         :class="{
-          'block-day-success': successArr.includes(item.label),
-          'block-day-error': errorArr.includes(item.label),
+          'block-day-success': success.includes(item.value),
+          'block-day-error': error.includes(item.value),
         }"
         @click="onClickDay(item)"
       >

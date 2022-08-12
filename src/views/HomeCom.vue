@@ -156,6 +156,8 @@ const selections = reactive([
 const onCalendar = (dayObj) => {
   console.log(dayObj);
 };
+
+const date = ref("");
 </script>
 
 <template>
@@ -172,7 +174,12 @@ const onCalendar = (dayObj) => {
     >
     </Table>
     <a-card>
-      <Calendar @click="onCalendar" />
+      <a-date-picker
+        v-model:value="date"
+        picker="month"
+        value-format="YYYY-MM-DD"
+      />
+      <Calendar v-model:date="date" @click="onCalendar" />
     </a-card>
   </a-layout>
 </template>

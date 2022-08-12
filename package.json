@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "ant-design-vue": "^3.2.11",
+    "dayjs": "^1.11.4",
     "vant": "^3.4.5",
     "vue": "^3.2.25",
     "vue-router": "4"
