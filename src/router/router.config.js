@@ -15,4 +15,12 @@ export default [
     path: "/home",
     component: () => import("@/views/HomeCom.vue"),
   },
+  {
+    path: "/calendar",
+    component: () => import("@/views/CalendarCom.vue"),
+  },
+  {
+    path: "/table",
+    component: () => import("@/views/TableCom.vue"),
+  },
 ];
