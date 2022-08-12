@@ -179,6 +179,7 @@ const date = ref(year + "-" + zeroFill(month) + "-" + zeroFill(day));
         v-model:value="date"
         picker="month"
         value-format="YYYY-MM-DD"
+        class="a-date-picker"
       />
       <Calendar v-model:date="date" @click="onCalendar" />
     </a-card>
@@ -190,5 +191,8 @@ const date = ref(year + "-" + zeroFill(month) + "-" + zeroFill(day));
   box-sizing: border-box;
   height: 100%;
   padding: 30px;
+  .a-date-picker {
+    margin-bottom: 10px;
+  }
 }
 </style>

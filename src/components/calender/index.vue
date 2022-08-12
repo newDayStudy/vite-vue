@@ -53,7 +53,7 @@ const days = computed(() => {
   return copyArr.map((item) => {
     return {
       label: item,
-      value: year + "-" + zeroFill(month + 1) + "-" + zeroFill(item),
+      value: year + "-" + zeroFill(month) + "-" + zeroFill(item),
     };
   });
 });
