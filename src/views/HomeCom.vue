@@ -4,6 +4,7 @@ import Table from "@/components/table/Table.vue";
 import Form from "@/components/form/Form.vue";
 import Calendar from "@/components/calender";
 import { Button } from "ant-design-vue";
+import { getDateObj, zeroFill } from "../components/calender/utils";
 const tableRef = ref();
 const state = reactive({
   dataSource: [
@@ -156,8 +157,8 @@ const selections = reactive([
 const onCalendar = (dayObj) => {
   console.log(dayObj);
 };
-
-const date = ref("");
+const { year, month, day } = getDateObj();
+const date = ref(year + "-" + zeroFill(month) + "-" + zeroFill(day));
 </script>
 
 <template>

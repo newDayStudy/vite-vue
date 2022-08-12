@@ -28,6 +28,11 @@ export function getDateObj(dateString) {
   }
 }
 
+export function getCurrentDate(dateString) {
+  const { year, month, day } = getDateObj(dateString);
+  return year + "-" + zeroFill(month) + "-" + zeroFill(day);
+}
+
 export function getDate(dateString) {
   const { year, month } = getDateObj(dateString);
   return new Date(year, month, 0).getDate();

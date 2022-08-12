@@ -1,6 +1,13 @@
 <script setup>
 import { computed } from "vue";
-import { getDate, getDay, copy, getDateObj, zeroFill } from "./utils";
+import {
+  getDate,
+  getDay,
+  copy,
+  getDateObj,
+  zeroFill,
+  getCurrentDate,
+} from "./utils";
 
 const emits = defineEmits(["click"]);
 
@@ -18,7 +25,7 @@ const $props = defineProps({
   date: {
     type: String,
     required: true,
-    default: "2022-08-01",
+    default: getCurrentDate(),
   },
   success: {
     type: Array,
