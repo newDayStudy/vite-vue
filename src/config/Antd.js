@@ -10,6 +10,7 @@ import {
   Table,
   Card,
   DatePicker,
+  Divider,
 } from "ant-design-vue";
 function antdRegisterComponent(app) {
   app
@@ -23,6 +24,7 @@ function antdRegisterComponent(app) {
     .use(Form)
     .use(Card)
     .use(DatePicker)
+    .use(Divider)
     .use(Table);
 }
 export default antdRegisterComponent;

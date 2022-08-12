@@ -44,6 +44,7 @@ const onreset = () => {
   props.itemList.forEach((item) => {
     ruleForm[item.key] = "";
   });
+  formRef.value.clearValidate();
 };
 
 defineExpose({

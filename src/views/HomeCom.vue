@@ -163,17 +163,20 @@ const date = ref(year + "-" + zeroFill(month) + "-" + zeroFill(day));
 
 <template>
   <a-layout class="a-layout">
-    <Form :item-list="state.formItems" @submit="submit" />
-    <Table
-      ref="tableRef"
-      row-key="key"
-      :data-source="state.dataSource"
-      :columns="state.columns"
-      selected-type="checkbox"
-      :selections="selections"
-      @change="change"
-    >
-    </Table>
+    <a-card>
+      <Form :item-list="state.formItems" @submit="submit" />
+      <Table
+        ref="tableRef"
+        row-key="key"
+        :data-source="state.dataSource"
+        :columns="state.columns"
+        selected-type="checkbox"
+        :selections="selections"
+        @change="change"
+      >
+      </Table>
+    </a-card>
+    <a-divider />
     <a-card>
       <a-date-picker
         v-model:value="date"
@@ -188,6 +191,7 @@ const date = ref(year + "-" + zeroFill(month) + "-" + zeroFill(day));
 
 <style lang="scss" scoped>
 .a-layout {
+  overflow-y: auto;
   box-sizing: border-box;
   height: 100%;
   padding: 30px;
