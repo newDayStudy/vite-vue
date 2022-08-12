@@ -7,6 +7,7 @@ import Modal from "@/components/modal";
 import { Button } from "ant-design-vue";
 
 import { useModal } from "@/components/modal/hooks/useModal";
+import { object } from "vue-types";
 
 const [register, { open }] = useModal();
 const formRef = ref();
@@ -194,7 +195,7 @@ const callback = async () => {
 </script>
 
 <template>
-  <a-layout>
+  <a-layout class="a-layout">
     <a-card>
       <Form :item-list="state.formItems" @submit="submit" />
       <Table
@@ -209,7 +210,12 @@ const callback = async () => {
       </Table>
     </a-card>
     <Modal title="模态框" width="50%" :submit="callback" @register="register">
-      <Form ref="formRef" :item-list="state.formItems" :footer="false" />
+      <Form
+        ref="formRef"
+        :form-props="{ layoyt: 'vertical' }"
+        :item-list="state.formItems"
+        :footer="false"
+      />
     </Modal>
   </a-layout>
 </template>
