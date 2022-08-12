@@ -84,6 +84,7 @@ const onClickDay = (dayObj) => {
         :key="index"
         class="calender-block-name"
         :class="{
+          'block-day-transparent': item.label == '',
           'block-day-success': success.includes(item.value),
           'block-day-error': error.includes(item.value),
         }"
@@ -112,6 +113,9 @@ const onClickDay = (dayObj) => {
       background-color: #f2f2f2;
       &.week {
         background-color: #d7d7d7;
+      }
+      &.block-day-transparent {
+        background-color: transparent;
       }
       &.block-day-success {
         background-color: green;
