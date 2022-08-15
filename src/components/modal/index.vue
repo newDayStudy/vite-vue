@@ -26,10 +26,11 @@ const close = (_) => {
   visible.value = false;
 };
 
-const onsubmit = (_) => {
+const onsubmit = async (_) => {
   confirmLoading.value = true;
   try {
-    $props.submit();
+    const res = await $props.submit();
+    res && close();
   } catch (error) {
     console.log("点击确定报错", error);
   } finally {
@@ -46,6 +47,7 @@ defineExpose({
 
 <template>
   <a-modal
+    v-if="visible"
     :visible="visible"
     v-bind="$attrs"
     :confirm-loading="confirmLoading"

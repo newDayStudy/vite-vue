@@ -33,7 +33,7 @@ module.exports = {
     eqeqeq: 2, // 强制使用 === 和 !==
     "default-case": 1, // 要求 switch 语句中有 default 分支
     "no-else-return": 1, // 禁止 if 语句中 return 语句之后有 else 块
-    "no-empty-function": 1, // 禁止出现空函数
+    // "no-empty-function": 1, // 禁止出现空函数
     "no-multi-spaces": 1, // 禁止使用多个空格
     radix: 1, // 强制在parseInt()使用基数参数
     eqeqeq: ["off"],

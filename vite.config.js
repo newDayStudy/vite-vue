@@ -5,6 +5,7 @@ import {
   VantResolve,
   AndDesignVueResolve,
 } from "vite-plugin-style-import";
+import vueJsx from "@vitejs/plugin-vue-jsx";
 import path from "path";
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -39,6 +40,7 @@ export default defineConfig({
   },
   plugins: [
     vue(),
+    vueJsx(),
     createStyleImportPlugin({
       resolves: [VantResolve(), AndDesignVueResolve()],
     }),

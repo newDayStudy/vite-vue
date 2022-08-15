@@ -9,6 +9,10 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  customCol: {
+    type: Object,
+    default: () => {},
+  },
   pagination: {
     type: [Object, Boolean],
     default: () => {},
@@ -27,32 +31,35 @@ const props = defineProps({
   },
 });
 const emits = defineEmits(["change"]);
-const basePagition = reactive({
-  current: 1,
-  pageSize: 5,
-  size: "small",
-  total: 0,
-  showTotal(total, range) {
-    return `共${total}条, 当前${range[0]} - ${range[1]}条`;
+const state = reactive({
+  basePagition: {
+    current: 1,
+    pageSize: 5,
+    size: "small",
+    total: 0,
+    showTotal(total, range) {
+      return `共${total}条, 当前${range[0]} - ${range[1]}条`;
+    },
+    showSizeChanger: true,
   },
-  showSizeChanger: true,
 });
 
 const mergePagination = computed(() => {
+  console.log("重新计算页码");
   return typeof props.pagination === "boolean"
     ? false
     : {
-        ...toRaw(basePagition),
+        ...toRaw(state.basePagition),
         ...toRaw(props.pagination),
       };
 });
 
 const onChange = (pagination) => {
-  basePagition.value = {
-    ...toRaw(basePagition.value),
-    ...toRaw(pagination),
+  state.basePagition = {
+    ...toRaw(state.basePagition),
+    ...pagination,
   };
-  emits("change", unref(mergePagination));
+  emits("change", toRaw(state.basePagition));
 };
 
 const onRowSelection = (selectedRowKeys) => {
@@ -63,6 +70,7 @@ const baseRowSelection = reactive({
   selectedRowKeys: [],
   type: props.selectedType,
   onChange: onRowSelection,
+  ...props.customCol,
   selections: toRaw(props.selections),
 });
 
@@ -96,6 +104,8 @@ defineExpose({
     :pagination="mergePagination"
     :row-selection="rowSelection"
     :custom-row="customRow"
+    size="middle"
+    :scroll="{ x: 'max-content' }"
     @change="onChange"
   >
   </a-table>
