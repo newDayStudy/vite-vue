@@ -9,6 +9,7 @@ const formState = reactive({
 const router = useRouter();
 const onFinish = (values) => {
   console.log("Success:", values);
+  localStorage.setItem("isAuthenticated", true);
   router.push("/home");
 };
 
