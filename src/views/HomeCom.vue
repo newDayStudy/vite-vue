@@ -2,7 +2,7 @@
 
 <template>
   <a-layout class="a-layout">
-    <a-card>
+    <a-layout-sider theme="light">
       <a-list bordered>
         <a-list-item>
           <router-link to="/table">表格</router-link>
@@ -17,6 +17,9 @@
           <router-link to="/question"> 问卷 </router-link>
         </a-list-item>
       </a-list>
-    </a-card>
+    </a-layout-sider>
+    <a-layout-content>
+      <router-view></router-view>
+    </a-layout-content>
   </a-layout>
 </template>

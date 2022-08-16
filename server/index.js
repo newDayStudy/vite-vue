@@ -14,8 +14,6 @@ app.use("*", (req, res, next) => {
   next();
 });
 
-app.use("/", questionRouter);
-
 app.post("/getArticleList", (req, res) => {
   const { pageSize, current } = req.body;
   const offset = (current - 1) * pageSize;
@@ -84,6 +82,8 @@ app.post("/deleteArticle", (req, res) => {
     }
   });
 });
+
+app.use("/", questionRouter);
 
 const server = app.listen(8081, () => {
   const host = server.address().address;
