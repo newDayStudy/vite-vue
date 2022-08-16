@@ -101,10 +101,12 @@ app.get("/getQuestion", (req, res) => {
 
 app.post("/addQuestion", (req, res) => {
   let _sort = 1;
-  const { title, publisher, sort } = req.body;
+  let _type = 1;
+  const { title, publisher, sort, type } = req.body;
   _sort = sort || _sort;
+  _type = type || _type;
   db(
-    `INSERT INTO question_table (title, sort, publisher) values ('${title}', ${_sort}, '${publisher}')`,
+    `INSERT INTO question_table (title, sort, publisher, type) values ('${title}', ${_sort}, '${publisher}', ${_type})`,
     (err, data) => {
       if (err) {
         res.json({
