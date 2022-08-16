@@ -23,4 +23,12 @@ export default [
     path: "/table",
     component: () => import("@/views/TableCom.vue"),
   },
+  {
+    path: "/form",
+    component: () => import("@/views/FormCom.vue"),
+  },
+  {
+    path: "/question",
+    component: () => import("@/views/QuestionCom.vue"),
+  },
 ];

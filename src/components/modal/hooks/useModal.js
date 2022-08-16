@@ -1,3 +1,4 @@
+import { watchEffect } from "vue";
 export function useModal() {
   let _vue = null;
 
@@ -13,5 +14,6 @@ export function useModal() {
       _vue.exposed.open();
     },
   };
+
   return [register, methods];
 }

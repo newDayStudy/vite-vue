@@ -1,6 +1,5 @@
 <script setup>
 import { ref, getCurrentInstance, onMounted } from "vue";
-
 const $props = defineProps({
   submit: {
     type: Function,
@@ -39,6 +38,7 @@ const onsubmit = async (_) => {
 };
 
 defineExpose({
+  visible,
   open,
   close,
   onsubmit,
@@ -47,13 +47,12 @@ defineExpose({
 
 <template>
   <a-modal
-    v-if="visible"
     :visible="visible"
     v-bind="$attrs"
     :confirm-loading="confirmLoading"
     @cancel="close"
     @ok="onsubmit"
   >
-    <slot></slot>
+    <slot> </slot>
   </a-modal>
 </template>

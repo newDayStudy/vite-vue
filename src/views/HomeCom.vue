@@ -10,16 +10,13 @@
         <a-list-item>
           <router-link to="/calendar"> 日历 </router-link>
         </a-list-item>
+        <a-list-item>
+          <router-link to="/form"> 表单 </router-link>
+        </a-list-item>
+        <a-list-item>
+          <router-link to="/question"> 问卷 </router-link>
+        </a-list-item>
       </a-list>
     </a-card>
   </a-layout>
 </template>
-
-<style lang="scss" scoped>
-.a-layout {
-  overflow-y: auto;
-  box-sizing: border-box;
-  height: 100%;
-  padding: 30px;
-}
-</style>

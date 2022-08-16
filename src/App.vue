@@ -24,4 +24,11 @@ body {
 #app {
   height: 100%;
 }
+
+.a-layout {
+  overflow-y: auto;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 30px;
+}
 </style>

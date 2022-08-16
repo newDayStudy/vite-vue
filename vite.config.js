@@ -13,7 +13,7 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "src"),
     },
-    extensions: [".json", ".vue", ".js", ".jsx"],
+    extensions: [".json", ".vue", ".js", ".jsx", ".tsx"],
   },
   css: {
     preprocessorOptions: {

@@ -13,6 +13,7 @@ import {
   Divider,
   Modal,
   List,
+  Collapse,
 } from "ant-design-vue";
 function antdRegisterComponent(app) {
   app
@@ -29,6 +30,7 @@ function antdRegisterComponent(app) {
     .use(Divider)
     .use(Modal)
     .use(List)
+    .use(Collapse)
     .use(Table);
 }
 export default antdRegisterComponent;

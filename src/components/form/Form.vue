@@ -80,7 +80,7 @@ defineExpose({
         v-model:value="ruleForm[item.key]"
       ></component>
     </a-form-item>
-    <slot>
+    <slot name="footer">
       <a-form-item v-if="footer">
         <a-button type="primary" @click="onsubmit">查询</a-button>
         <a-button style="margin-left: 10px" @click="onreset">重置</a-button>
