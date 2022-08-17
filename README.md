@@ -10,3 +10,9 @@ npm run dev / yarn dev
 ## 启动服务器 （需创建表）
 
 yarn server / npm run server
+
+### 问卷调查
+
+data 目录存放表的数据
+问题表: question.json
+选项表: answer.json
