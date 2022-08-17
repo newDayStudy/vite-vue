@@ -8,7 +8,8 @@
     "preview": "vite preview",
     "lint": "eslint --ext .vue,.js ./",
     "lint:fix": "eslint --fix --ext .vue,.js ./",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "server": "node ./server/index.js"
   },
   "dependencies": {
     "ant-design-vue": "^3.2.11",
