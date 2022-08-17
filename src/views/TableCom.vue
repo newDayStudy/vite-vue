@@ -1,18 +1,14 @@
 <script setup>
-import { reactive, h, ref, unref, onMounted } from "vue";
-import apis from "@/apis";
+import { reactive, h, ref, unref, onMounted, computed } from "vue";
+import apis, { updateArticle } from "@/apis";
 import Table from "@/components/table/Table.vue";
 import Modal from "@/components/modal";
-
+import Form from "@/components/form/Form";
 import { Button } from "ant-design-vue";
-
 import { useModal } from "@/components/modal/hooks/useModal";
-
 const [register, { open }] = useModal();
 const formRef = ref();
-
 const tableRef = ref();
-
 const state = reactive({
   dataSource: [],
   columns: [
@@ -53,7 +49,8 @@ const state = reactive({
               },
               onClick(e) {
                 e.stopPropagation();
-                open(record);
+                open();
+                state.record = { ...record };
               },
             },
             () => h("span", "编辑")
@@ -76,60 +73,65 @@ const state = reactive({
   ],
   formItems: [
     {
-      key: "username",
+      key: "title",
       formItemProps: {
-        label: "姓名",
-        rules: [{ required: true, message: "请输入姓名" }],
+        label: "标题",
+        rules: [{ required: true, message: "请输入标题" }],
       },
       defaultValue: "",
       type: "Input",
       slotProps: {
+        model: "value",
         placeholder: "请输入",
         allowClear: true,
       },
     },
     {
-      key: "age",
+      key: "sub_title",
       formItemProps: {
-        label: "年龄",
-        rules: [{ required: true, message: "请输入年龄" }],
+        label: "子标题",
+        rules: [{ required: true, message: "请输入子标题" }],
       },
       defaultValue: "",
       type: "Input",
       slotProps: {
+        model: "value",
         placeholder: "请输入",
         allowClear: true,
       },
     },
     {
-      key: "sex",
+      key: "content",
       formItemProps: {
-        label: "性别",
-        rules: [{ required: true, message: "请选择性别" }],
+        label: "内容",
       },
       defaultValue: "",
-      type: "Select",
+      type: "QuillEditor",
       slotProps: {
-        placeholder: "请选择",
-        allowClear: true,
-        style: {
-          width: "200px",
+        content: "",
+        model: "content",
+        contentType: "html",
+        options: {
+          placeholder: "请输入",
         },
-        options: [
-          {
-            label: "男",
-            value: "0",
-          },
-          {
-            label: "女",
-            value: "1",
-          },
-        ],
       },
     },
   ],
+  record: {},
 });
-
+const formItems = computed(() => {
+  return state.formItems.map((item) => {
+    const slotProps = item.slotProps || {};
+    if (item.type == "QuillEditor") {
+      slotProps.content = state.record[item.key];
+    }
+    return {
+      ...item,
+      defaultValue: state.record[item.key],
+      slotProps,
+    };
+  });
+});
 const pagination = reactive({
   current: 1,
   pageSize: 5,
@@ -144,6 +146,7 @@ const change = (page) => {
   console.log("页码：", page.current);
   pagination.current = page.current;
   pagination.pageSize = page.pageSize;
+  getTableData();
 };
 const deleteRow = async (id) => {
   const res = await apis.deleteRowData({
@@ -157,11 +160,13 @@ const deleteRow = async (id) => {
     alert(message);
   }
 };
-const deleteRows = () => {
+const deleteRows = async () => {
   const { selectedRowKeys } = unref(tableRef).selectedRowKeys;
-  state.dataSource = state.dataSource.filter(
-    (item) => !selectedRowKeys.includes(item.key)
-  );
+  await deleteRow(selectedRowKeys.join(","));
+  if (selectedRowKeys.length == state.dataSource.length) {
+    pagination.current = pagination.current - 1 || 1;
+    getTableData();
+  }
 };
 const selections = reactive([
   {
@@ -174,17 +179,31 @@ const selections = reactive([
 const callback = async () => {
   try {
     const values = await unref(formRef).formRef.validateFields();
-    console.log(values);
+    updateRow(values);
     return true;
   } catch (errorInfo) {
     console.log("Failed:", errorInfo);
   }
 };
 
-const getTableData = async (current = 1, pageSize = 10) => {
+const updateRow = async (values) => {
+  const id = state.record.id;
+  const res = await updateArticle({
+    ...values,
+    id,
+  });
+  if (res.code == 200) {
+    alert(res.message);
+    getTableData();
+    state.record = {};
+  } else {
+    alert(res.message);
+  }
+};
+const getTableData = async () => {
   const res = await apis.getTableData({
-    current,
-    pageSize,
+    current: pagination.current,
+    pageSize: pagination.pageSize,
   });
   const { records, total } = res.data;
   state.dataSource = records;
@@ -198,7 +217,7 @@ onMounted(getTableData);
     <a-card>
       <Table
         ref="tableRef"
-        row-key="key"
+        row-key="id"
         :data-source="state.dataSource"
         :columns="state.columns"
         selected-type="checkbox"
@@ -210,6 +229,12 @@ onMounted(getTableData);
       </Table>
     </a-card>
     <Modal title="模态框" width="50%" :submit="callback" @register="register">
+      <Form
+        ref="formRef"
+        :item-list="formItems"
+        :form-props="{ layout: 'vertical' }"
+        :footer="false"
+      />
     </Modal>
   </a-layout>
 </template>

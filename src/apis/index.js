@@ -5,6 +5,8 @@ export const addQuestion = (params) => instance.post("addQuestion", params);
 export const getQuestion = (params) => instance.get("getQuestion", params);
 export const addAnswer = (params) => instance.post("addAnswer", params);
 export const getTopic = (params) => instance.get("/getTopic", params);
+export const updateArticle = (params) =>
+  instance.post("/updateArticle", params);
 export default {
   getTableData(params) {
     return instance.post("getArticleList", params);

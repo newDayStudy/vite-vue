@@ -12,6 +12,7 @@ const formItems = reactive([
     type: "Input",
     defaultValue: "",
     slotProps: {
+      model: "value",
       placeholder: "请输入问题名称",
       allowClear: true,
     },
@@ -25,6 +26,7 @@ const formItems = reactive([
     type: "Input",
     defaultValue: "",
     slotProps: {
+      model: "value",
       placeholder: "请输入排序",
       allowClear: true,
     },
@@ -38,6 +40,7 @@ const formItems = reactive([
     slotProps: {
       placeholder: "请选择类型",
       allowClear: true,
+      model: "value",
       style: {
         width: "200px",
       },
@@ -56,6 +59,7 @@ const formItems = reactive([
     type: "Input",
     defaultValue: "",
     slotProps: {
+      model: "value",
       placeholder: "请输入发布人",
       allowClear: true,
     },
@@ -85,6 +89,7 @@ const formItems1 = reactive([
     type: "Input",
     defaultValue: "",
     slotProps: {
+      model: "value",
       placeholder: "请输入选项名称",
       allowClear: true,
     },
@@ -98,6 +103,7 @@ const formItems1 = reactive([
     type: "Input",
     defaultValue: "",
     slotProps: {
+      model: "value",
       placeholder: "请输入排序",
       allowClear: true,
     },
@@ -111,6 +117,7 @@ const formItems1 = reactive([
     type: "Input",
     defaultValue: "",
     slotProps: {
+      model: "value",
       placeholder: "请输入发布人",
       allowClear: true,
     },
@@ -124,6 +131,7 @@ const formItems1 = reactive([
     type: "Input",
     defaultValue: "",
     slotProps: {
+      model: "value",
       placeholder: "请选择",
       allowClear: true,
     },
@@ -137,6 +145,7 @@ const formItems1 = reactive([
     type: "Select",
     defaultValue: "",
     slotProps: {
+      model: "value",
       placeholder: "请选择",
       allowClear: true,
       style: {

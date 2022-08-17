@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, reactive, ref, toRaw } from "vue";
+import { computed, effect, reactive, ref, toRaw } from "vue";
 import components from "./FormItem";
 const props = defineProps({
   itemList: {
@@ -32,7 +32,7 @@ const formItems = computed(() => {
   });
 });
 
-onMounted(() => {
+effect(() => {
   props.itemList.forEach((item) => {
     ruleForm[item.key] = item.defaultValue || "";
   });
@@ -77,7 +77,7 @@ defineExpose({
       <component
         :is="item.type"
         v-bind="item.slotProps"
-        v-model:value="ruleForm[item.key]"
+        v-model:[item.slotProps.model]="ruleForm[item.key]"
       ></component>
     </a-form-item>
     <slot name="footer">

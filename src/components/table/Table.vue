@@ -49,8 +49,8 @@ const mergePagination = computed(() => {
   return typeof props.pagination === "boolean"
     ? false
     : {
-        ...toRaw(state.basePagition),
-        ...toRaw(props.pagination),
+        ...state.basePagition,
+        ...props.pagination,
       };
 });
 
