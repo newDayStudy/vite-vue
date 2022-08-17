@@ -7,6 +7,6 @@
 
 npm run dev / yarn dev
 
-## 启动服务器
+## 启动服务器 （需创建表）
 
 yarn server / npm run server
