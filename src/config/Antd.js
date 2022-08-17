@@ -14,6 +14,7 @@ import {
   Modal,
   List,
   Collapse,
+  Menu,
 } from "ant-design-vue";
 function antdRegisterComponent(app) {
   app
@@ -31,6 +32,7 @@ function antdRegisterComponent(app) {
     .use(Modal)
     .use(List)
     .use(Collapse)
+    .use(Menu)
     .use(Table);
 }
 export default antdRegisterComponent;
