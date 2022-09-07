@@ -1,23 +1,33 @@
 const express = require("express");
 const db = require("./mysql");
 const fs = require("fs");
+const path = require("path");
 const router = express.Router();
-
+const question = require("../data/question.json");
+const topic = require("../data/topic.json");
+// 是否开启服务，有数据库
+const startServer = true;
 router.get("/getQuestion", (req, res) => {
-  db("SELECT id, title FROM question_table", (err, data) => {
-    if (err) {
-      res.json({
-        code: 500,
-        message: "获取问题出错了",
-      });
-    } else {
-      res.json({
+  startServer
+    ? db("SELECT id, title FROM question_table", (err, data) => {
+        if (err) {
+          res.json({
+            code: 500,
+            message: "获取问题出错了",
+          });
+        } else {
+          res.json({
+            code: 200,
+            data,
+            message: "ok",
+          });
+        }
+      })
+    : res.json({
         code: 200,
-        data,
+        data: question,
         message: "ok",
       });
-    }
-  });
 });
 
 router.post("/addQuestion", (req, res) => {
@@ -69,33 +79,39 @@ router.post("/addAnswer", (req, res) => {
 });
 
 router.get("/getTopic", (req, res) => {
-  db("SELECT * FROM question_table", (eq, qes) => {
-    if (eq) {
-      res.json({
-        code: "500",
-        message: "获取问题出错了",
-      });
-    } else {
-      db("SELECT * FROM answer_table", (ea, ans) => {
-        if (ea) {
+  startServer
+    ? db("SELECT * FROM question_table", (eq, qes) => {
+        if (eq) {
           res.json({
             code: "500",
-            message: "获取选项出错了",
+            message: "获取问题出错了",
           });
         } else {
-          const data = qes.map((item) => {
-            item.children = ans.filter((a) => a.question_id == item.id);
-            return item;
-          });
-          res.json({
-            code: 200,
-            data,
-            message: "ok",
+          db("SELECT * FROM answer_table", (ea, ans) => {
+            if (ea) {
+              res.json({
+                code: "500",
+                message: "获取选项出错了",
+              });
+            } else {
+              const data = qes.map((item) => {
+                item.children = ans.filter((a) => a.question_id == item.id);
+                return item;
+              });
+              res.json({
+                code: 200,
+                data,
+                message: "ok",
+              });
+            }
           });
         }
+      })
+    : res.json({
+        code: 200,
+        data: topic,
+        message: "ok",
       });
-    }
-  });
 });
 
 module.exports = router;
