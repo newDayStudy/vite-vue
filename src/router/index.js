@@ -1,5 +1,9 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import routes from "./router.config";
+const files = import.meta.globEager("./modules/*.js");
+let routes = [];
+Object.keys(files).forEach((key) => {
+  routes = routes.concat(files[key].default);
+});
 const router = createRouter({
   history: createWebHashHistory(),
   routes,

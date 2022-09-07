@@ -1,14 +1,17 @@
 <script setup>
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
+import { userStore } from "@/store";
 const formState = reactive({
   username: "admin",
   password: "123456",
   remember: true,
 });
+const useUserStore = userStore();
 const router = useRouter();
 const onFinish = (values) => {
   console.log("Success:", values);
+  useUserStore.bindUser(true);
   localStorage.setItem("isAuthenticated", true);
   router.push("/home");
 };

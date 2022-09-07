@@ -3,7 +3,8 @@ import App from "./App.vue";
 import routes from "./router/index";
 import registerComponent from "./config";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
-
+import { createPinia } from "pinia";
 const app = createApp(App);
+app.use(createPinia());
 registerComponent(app);
 app.use(routes).mount("#app");

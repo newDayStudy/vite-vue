@@ -15,9 +15,11 @@ import {
   List,
   Collapse,
   Menu,
+  Spin,
 } from "ant-design-vue";
 function antdRegisterComponent(app) {
   app
+    .use(Spin)
     .use(Button)
     .use(Col)
     .use(Row)
