@@ -6,7 +6,7 @@ const router = express.Router();
 const question = require("../data/question.json");
 const topic = require("../data/topic.json");
 // 是否开启服务，有数据库
-const startServer = true;
+const startServer = require("./startServer");
 router.get("/getQuestion", (req, res) => {
   startServer
     ? db("SELECT id, title FROM question_table", (err, data) => {
