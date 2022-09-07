@@ -16,3 +16,7 @@ yarn server / npm run server
 data 目录存放表的数据
 问题表: question.json
 选项表: answer.json
+
+### 若无数据库
+
+打开文件 server/startServer.js startServer 改为 false,使用本地数据
