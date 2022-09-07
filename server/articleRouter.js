@@ -5,6 +5,8 @@ const fs = require("fs");
 const path = require("path");
 const articleList = require("../data/articleList.json");
 const startServer = require("./startServer");
+const nodeExcel = require("excel-export");
+const { config } = require("process");
 router.post("/getArticleList", (req, res) => {
   const { pageSize, current } = req.body;
   const offset = (current - 1) * pageSize;
@@ -106,5 +108,60 @@ router.post("/updateArticle", (req, res) => {
     }
   );
 });
-
+router.post("/export", (req, res) => {
+  db("SELECT * FROM article_table", (err, data) => {
+    if (err) {
+      res.json({
+        code: 500,
+        message: "internal error",
+      });
+    } else {
+      const name = new Date().getTime();
+      const conf = {};
+      conf.name = "Sheet1";
+      const colsArr = [
+        {
+          caption: "编号",
+          type: "number",
+        },
+        {
+          caption: "标题",
+          type: "string",
+        },
+        {
+          caption: "子标题",
+          type: "string",
+        },
+        {
+          caption: "内容",
+          type: "string",
+        },
+        {
+          caption: "发布人",
+          type: "string",
+        },
+      ];
+      conf.cols = colsArr;
+      const array = [];
+      data.forEach((item) => {
+        const temp = new Array();
+        temp[0] = item.id;
+        temp[1] = item.title;
+        temp[2] = item.sub_title;
+        temp[3] = item.content;
+        temp[4] = item.publisher_id;
+        array.push(temp);
+      });
+      conf.rows = array;
+      const result = nodeExcel.execute(conf);
+      // fs.writeFileSync(path.resolve(__dirname, `../data/${new Date().getTime()}.xlsx`), result, 'binary');
+      res.setHeader("Content-Type", "application/vnd.openxmlformats");
+      res.setHeader(
+        "Content-Disposition",
+        "attachment; filename=" + name + ".xlsx"
+      );
+      res.end(result, "binary");
+    }
+  });
+});
 module.exports = router;

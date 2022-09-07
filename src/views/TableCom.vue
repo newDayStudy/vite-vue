@@ -1,6 +1,6 @@
 <script setup>
 import { reactive, h, ref, unref, onMounted, computed } from "vue";
-import apis, { updateArticle } from "@/apis";
+import apis, { updateArticle, exportExcel } from "@/apis";
 import Table from "@/components/table/Table.vue";
 import Modal from "@/components/modal";
 import Form from "@/components/form/Form";
@@ -210,11 +210,26 @@ const getTableData = async () => {
   pagination.total = total;
 };
 onMounted(getTableData);
+
+const exportExcelEvent = async () => {
+  const res = await exportExcel({
+    type: "excel",
+  });
+  const blob = new Blob([res]);
+  const a = document.createElement("a");
+  a.download = new Date().getTime() + ".xlsx";
+  a.href = URL.createObjectURL(blob);
+  a.style.display = "none";
+  document.body.appendChild(a);
+  a.click();
+  URL.revokeObjectURL(a);
+};
 </script>
 
 <template>
   <a-layout class="a-layout">
     <a-card>
+      <a-button type="primary" @click="exportExcelEvent">导出</a-button>
       <Table
         ref="tableRef"
         row-key="id"

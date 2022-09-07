@@ -7,6 +7,10 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
+    if (config.data?.type == "excel") {
+      config.responseType = "arraybuffer";
+    }
+    console.log(config);
     return config;
   },
   (error) => {
@@ -17,9 +21,11 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (res) => {
     console.log("res", res);
-    if (res.status == 200 && res.data.code != 200) {
-      alert("出错了");
-      return;
+    if (res.config.responseType !== "arraybuffer") {
+      if (res.status == 200 && res.data.code != 200) {
+        alert("出错了");
+        return;
+      }
     }
     return Promise.resolve(res.data);
   },
