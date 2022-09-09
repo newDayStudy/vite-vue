@@ -5,7 +5,7 @@ import { Select } from "ant-design-vue";
 const form = reactive({
   username: "12313",
   password: "3213213",
-  sex: "",
+  sex: "1",
 });
 const formItems = reactive([
   {
@@ -44,7 +44,7 @@ const formItems = reactive([
     },
     customRender(item) {
       return h(Select, {
-        modelValue: form[item.formItemProps.name],
+        value: form[item.formItemProps.name],
         onChange(e) {
           form[item.formItemProps.name] = e;
         },
