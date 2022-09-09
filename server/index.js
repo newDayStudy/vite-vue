@@ -2,9 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 
-const questionRouter = require("./questionRouter");
-const articleRouter = require("./articleRouter");
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -17,9 +14,15 @@ app.use("*", (req, res, next) => {
   next();
 });
 
+const questionRouter = require("./questionRouter");
+const articleRouter = require("./articleRouter");
+const userRouter = require("./userRouter");
+const menuRouter = require("./menuRouter");
+
 app.use("/", questionRouter);
 app.use("/", articleRouter);
-
+app.use("/", userRouter);
+app.use("/", menuRouter);
 const server = app.listen(8081, () => {
   const host = server.address().address;
   const port = server.address().port;

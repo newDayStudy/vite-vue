@@ -14,6 +14,9 @@ export function useModal() {
       }
       _vue.exposed.open();
     },
+    close() {
+      _vue.exposed.close();
+    },
   };
 
   return [register, methods];

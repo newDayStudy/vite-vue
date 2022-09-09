@@ -6,6 +6,7 @@ import {
   ConfigProvider,
   Checkbox,
   Input,
+  InputPassword,
   Form,
   Table,
   Card,
@@ -16,9 +17,11 @@ import {
   Collapse,
   Menu,
   Spin,
+  notification,
 } from "ant-design-vue";
 function antdRegisterComponent(app) {
   app
+    .use(InputPassword)
     .use(Spin)
     .use(Button)
     .use(Col)
@@ -36,5 +39,7 @@ function antdRegisterComponent(app) {
     .use(Collapse)
     .use(Menu)
     .use(Table);
+
+  app.config.globalProperties.notification = notification;
 }
 export default antdRegisterComponent;

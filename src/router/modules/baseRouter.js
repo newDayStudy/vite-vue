@@ -15,6 +15,16 @@ export default [
     component: () => import("@/views/HomeCom.vue"),
     children: [
       {
+        path: "/user",
+        name: "user",
+        component: () => import("@/views/UserCom.vue"),
+      },
+      {
+        path: "/menu",
+        name: "menu",
+        component: () => import("@/views/menuCom.vue"),
+      },
+      {
         path: "/calendar",
         name: "calendar",
         component: () => import("@/views/CalendarCom.vue"),

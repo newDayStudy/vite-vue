@@ -9,6 +9,12 @@ const selectedKeys = ref([route.name]);
   <a-layout class="a-layout">
     <a-layout-sider theme="dark">
       <a-menu v-model:selectedKeys="selectedKeys" mode="inline" theme="dark">
+        <a-menu-item key="user">
+          <router-link to="/user">用户管理</router-link>
+        </a-menu-item>
+        <a-menu-item key="menu">
+          <router-link to="/menu">菜单管理</router-link>
+        </a-menu-item>
         <a-menu-item key="table">
           <router-link to="/table">表格</router-link>
         </a-menu-item>

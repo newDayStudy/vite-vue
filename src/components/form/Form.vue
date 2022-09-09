@@ -24,6 +24,7 @@ const emits = defineEmits(["submit"]);
 const ruleForm = reactive({});
 const formRef = ref();
 const formItems = computed(() => {
+  console.log("props.itemList", props.itemList);
   const itemList = toRaw(props.itemList);
   const list = JSON.parse(JSON.stringify(itemList));
   return reactive(list).map((item) => {

@@ -20,6 +20,8 @@
     "excel-export": "^0.5.1",
     "express": "^4.18.1",
     "js-file-download": "^0.4.12",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.4",
     "mysql": "^2.18.1",
     "pinia": "^2.0.22",
     "vant": "^3.4.5",

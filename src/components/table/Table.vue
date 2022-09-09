@@ -83,10 +83,10 @@ const rowSelection = computed(() => {
 
 const customRow = (record, index) => {
   return {
-    onClick(e) {
-      e.stopPropagation();
-      console.log(record, index);
-    },
+    // onClick(e) {
+    //   e.stopPropagation();
+    //   console.log(record, index);
+    // },
   };
 };
 
