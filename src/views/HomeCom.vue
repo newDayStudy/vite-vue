@@ -27,6 +27,9 @@ const selectedKeys = ref([route.name]);
         <a-menu-item key="question">
           <router-link to="/question"> 问卷 </router-link>
         </a-menu-item>
+        <a-menu-item key="test">
+          <router-link to="/test"> 测试 </router-link>
+        </a-menu-item>
       </a-menu>
     </a-layout-sider>
     <a-layout-content>

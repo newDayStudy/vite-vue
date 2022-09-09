@@ -1,10 +1,5 @@
 export default [
   {
-    path: "/hello",
-    name: "hello",
-    component: () => import("@/components/HelloWorld.vue"),
-  },
-  {
     path: "/login",
     name: "login",
     component: () => import("@/views/LoginCom.vue"),
@@ -43,6 +38,11 @@ export default [
         path: "/question",
         name: "question",
         component: () => import("@/views/QuestionCom.vue"),
+      },
+      {
+        path: "/test",
+        name: "test",
+        component: () => import("@/views/TestCom.vue"),
       },
     ],
   },
