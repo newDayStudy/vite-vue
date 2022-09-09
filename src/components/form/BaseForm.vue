@@ -1,8 +1,8 @@
 <script>
-import { defineComponent, h, isReactive } from "vue";
+import { h } from "vue";
 import componentMap from "./FormItem";
-import { Form, FormItem } from "ant-design-vue";
-export default defineComponent({
+import { Form, FormItem, Row, Col } from "ant-design-vue";
+export default {
   props: {
     modelValue: {
       type: Object,
@@ -13,9 +13,7 @@ export default defineComponent({
     formProps: {
       type: Object,
       default() {
-        return {
-          layout: "inline",
-        };
+        return {};
       },
     },
     formItems: {
@@ -24,7 +22,6 @@ export default defineComponent({
     },
   },
   setup(props, { emit, slots }) {
-    console.log(isReactive(props.modelValue));
     return () =>
       h(
         Form,
@@ -33,32 +30,47 @@ export default defineComponent({
           ...props.formProps,
         },
         [
-          props.formItems.map((item) => {
-            const componentName = componentMap.get(item.type);
-            const name =
-              item.formItemProps.name.charAt(0).toUpperCase() +
-              item.formItemProps.name.substring(1);
-            return h(
-              FormItem,
-              {
-                key: item.formItemProps.name,
-                ...item.formItemProps,
-              },
-              [
-                item.customRender
-                  ? h(item.customRender(item))
-                  : h(componentName, {
-                      [`model${name}`]:
-                        props.modelValue[item.formItemProps.name],
-                      ...item.comProps,
-                      ...item.comOns,
-                    }),
-              ]
-            );
-          }),
+          h(
+            Row,
+            {
+              gutter: 20,
+            },
+            props.formItems.map((item) => {
+              const componentName = componentMap.get(item.type);
+              return h(
+                Col,
+                {
+                  span: item.col || 8,
+                },
+                h(
+                  FormItem,
+                  {
+                    key: item.formItemProps.name,
+                    ...item.formItemProps,
+                  },
+                  [
+                    item.customRender
+                      ? h(item.customRender(item))
+                      : h(componentName, {
+                          value: props.modelValue[item.formItemProps.name],
+                          onChange(e) {
+                            props.modelValue[item.formItemProps.name] =
+                              e.target.value;
+                          },
+                          placeholder: "请输入",
+                          allowClear: true,
+                          disabled: false,
+                          ...item.comProps,
+                          ...item.comOns,
+                        }),
+                  ]
+                )
+              );
+            })
+          ),
           slots.default && slots.default(),
         ]
       );
   },
-});
+};
 </script>

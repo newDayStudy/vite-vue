@@ -92,5 +92,6 @@ module.exports = {
     "spaced-comment": ["error", "always"], // 注释后面必须跟随至少一个空白
     "object-curly-spacing": 0,
     "no-unused-expressions": 0,
+    "vue/no-mutating-props": 0,
   },
 };

@@ -7,6 +7,7 @@ import {
   Checkbox,
   Input,
   InputPassword,
+  InputNumber,
   Form,
   Table,
   Card,
@@ -21,6 +22,7 @@ import {
 } from "ant-design-vue";
 function antdRegisterComponent(app) {
   app
+    .use(InputNumber)
     .use(InputPassword)
     .use(Spin)
     .use(Button)
