@@ -3,7 +3,7 @@ import Table from "@/components/table/Table";
 import { getMenus, addMenu } from "@/apis";
 import { reactive, onMounted, ref, unref, getCurrentInstance, h } from "vue";
 import Modal from "@/components/modal";
-import Form from "@/components/form/Form";
+import BaseFormVue from "@/components/form/BaseForm";
 import { useModal } from "@/components/modal/hooks/useModal";
 const [register, { open, close }] = useModal();
 const currentInstance = getCurrentInstance();
@@ -42,90 +42,66 @@ const getMenuApi = async () => {
     console.log("error", error);
   }
 };
-const itemList = reactive([
+const formItems = reactive([
   {
-    key: "name",
+    col: 24,
     formItemProps: {
       label: "菜单名称",
+      name: "name",
       rules: [{ required: true, message: "请输入菜单名称" }],
     },
     type: "Input",
-    defaultValue: "",
-    slotProps: {
-      model: "value",
-      placeholder: "请输入菜单名称",
-      allowClear: true,
-    },
   },
   {
-    key: "code",
+    col: 24,
     formItemProps: {
       label: "菜单编码",
+      name: "code",
       rules: [{ required: true, message: "请输入菜单编码" }],
     },
     type: "Input",
-    defaultValue: "",
-    slotProps: {
-      model: "value",
-      placeholder: "请输入菜单编码",
-      allowClear: true,
-    },
   },
   {
-    key: "path",
+    col: 24,
     formItemProps: {
+      name: "path",
       label: "菜单路由",
       rules: [{ required: true, message: "请输入菜单路由" }],
     },
     type: "Input",
-    defaultValue: "",
-    slotProps: {
-      model: "value",
-      placeholder: "请输入菜单路由",
-      allowClear: true,
-    },
   },
   {
-    key: "filepath",
+    col: 24,
     formItemProps: {
       label: "文件路径",
+      name: "filepath",
       rules: [{ required: true, message: "请输入文件路径" }],
     },
     type: "Input",
-    defaultValue: "",
-    slotProps: {
-      model: "value",
-      placeholder: "请输入文件路径",
-      allowClear: true,
-    },
   },
   {
-    key: "icon",
+    col: 24,
     formItemProps: {
       label: "菜单图标",
+      name: "icon",
       rules: [{ required: true, message: "请输入菜单图标" }],
     },
     type: "Input",
-    defaultValue: "",
-    slotProps: {
-      model: "value",
-      placeholder: "请输入菜单图标",
-      allowClear: true,
-    },
   },
 ]);
 
 onMounted(() => {
   getMenuApi();
 });
-const visible = ref(false);
 const formRef = ref();
 const submit = async () => {
   try {
-    const values = await unref(formRef).formRef.validateFields();
-    const roleName = roles.value.find((item) => item.id == values.roleId)?.name;
-    console.log(values, roleName);
-    addMenuApi({ ...values, roleName });
+    formRef.value.$refs.ruleForm.validate((valid) => {
+      if (valid) {
+        console.log(1111);
+      }
+    });
+    // addMenuApi({ ...values, roleName });
   } catch (error) {
     console.log(error);
   }
@@ -145,6 +121,13 @@ const addMenuApi = async (params) => {
     console.log(error);
   }
 };
+const form = reactive({
+  icon: "",
+  code: "",
+  name: "",
+  path: "",
+  filepath: "",
+});
 </script>
 <template>
   <div>
@@ -157,12 +140,7 @@ const addMenuApi = async (params) => {
       <Table :columns="columns" :data-source="dataSource" />
     </a-card>
     <Modal title="新增菜单" :submit="submit" @register="register">
-      <Form
-        v-if="visible"
-        :item-list="itemList"
-        :form-props="{ layout: 'vertical' }"
-        :footer="null"
-      />
+      <BaseFormVue ref="formRef" v-model="form" :form-items="formItems" />
     </Modal>
   </div>
 </template>

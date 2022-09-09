@@ -16,6 +16,7 @@ export function useModal() {
     },
     close() {
       _vue.exposed.close();
+      _vue = null;
     },
   };
 

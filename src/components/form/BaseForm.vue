@@ -26,6 +26,7 @@ export default {
       h(
         Form,
         {
+          ref: "ruleForm",
           model: props.modelValue,
           ...props.formProps,
         },
