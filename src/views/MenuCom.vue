@@ -7,6 +7,8 @@ import BaseFormVue from "@/components/form/BaseForm";
 import { useModal } from "@/components/modal/hooks/useModal";
 const [register, { open, close }] = useModal();
 const currentInstance = getCurrentInstance();
+const notification =
+  currentInstance.appContext.config.globalProperties.notification;
 const columns = reactive([
   {
     title: "菜单编号",
@@ -88,33 +90,38 @@ const formItems = reactive([
     },
     type: "Input",
   },
+  {
+    col: 24,
+    formItemProps: {
+      label: "菜单排序",
+      name: "sort",
+    },
+    type: "Input",
+  },
 ]);
 
 onMounted(() => {
   getMenuApi();
 });
 const formRef = ref();
-const submit = async () => {
+const callback = async () => {
   try {
-    formRef.value.$refs.ruleForm.validate((valid) => {
-      if (valid) {
-        console.log(1111);
-      }
-    });
-    // addMenuApi({ ...values, roleName });
-  } catch (error) {
-    console.log(error);
+    const values = await unref(formRef).$refs.ruleForm.validateFields();
+    addMenuApi(values);
+    return true;
+  } catch (errorInfo) {
+    console.log("Failed:", errorInfo);
   }
 };
+
 const addMenuApi = async (params) => {
   try {
     const res = await addMenu(params);
     const { code, message } = res;
     if (code == 200) {
-      currentInstance.appContext.config.globalProperties.notification.success({
+      notification.success({
         description: message,
       });
-      close();
       getMenuApi();
     }
   } catch (error) {
@@ -127,10 +134,11 @@ const form = reactive({
   name: "",
   path: "",
   filepath: "",
+  sort: "",
 });
 </script>
 <template>
-  <div>
+  <a-layout class="a-layout">
     <a-card>
       <a-form-model>
         <a-form-model-item>
@@ -139,8 +147,8 @@ const form = reactive({
       </a-form-model>
       <Table :columns="columns" :data-source="dataSource" />
     </a-card>
-    <Modal title="新增菜单" :submit="submit" @register="register">
+    <Modal title="新增菜单" :submit="callback" @register="register">
       <BaseFormVue ref="formRef" v-model="form" :form-items="formItems" />
     </Modal>
-  </div>
+  </a-layout>
 </template>

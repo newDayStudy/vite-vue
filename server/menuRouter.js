@@ -1,7 +1,7 @@
 const express = require("express");
 const db = require("./mysql");
 const router = express.Router();
-
+const { getDate } = require("./utils");
 router.get("/getMenus", (req, res) => {
   db(`SELECT * FROM menu_table`, (err, data) => {
     if (err) {
@@ -10,6 +10,7 @@ router.get("/getMenus", (req, res) => {
         message: "Internal Server Error",
       });
     } else {
+      // handleDeep(data)
       console.log("menus", data);
       res.json({
         code: 200,
@@ -22,9 +23,13 @@ router.get("/getMenus", (req, res) => {
   });
 });
 router.post("/addMenu", (req, res) => {
-  const { name, icon, path, parent_id, user_id, filepath } = req.body;
+  const { name, icon, path, parent_id, user_id, filepath, sort } = req.body;
+  const parentId = parent_id || 0;
+  const userId = user_id || 1;
+  const create_time = getDate();
+  const update_time = getDate();
   db(
-    `INSERT INTO menu_table (name, icon, path, parent_id, user_id, filepath) values ('${name}', '${icon}', '${path}', ${parent_id}, ${user_id}, ${filepath})`,
+    `INSERT INTO menu_table (name, icon, path, parent_id, user_id, filepath, sort, create_time, update_time) values ('${name}', '${icon}', '${path}', ${parentId}, ${userId}, ${filepath}, ${sort}, ${create_time}, ${update_time})`,
     (err, data) => {
       if (err) {
         res.json({

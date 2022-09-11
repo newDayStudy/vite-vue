@@ -1,10 +1,11 @@
 <script setup>
 import { useRouter } from "vue-router";
+import { userStore } from "@/store";
 import zhCN from "ant-design-vue/es/locale/zh_CN";
 import dayjs from "dayjs";
 import "dayjs/locale/zh-cn";
 dayjs.locale("zhCN");
-
+const useUserStore = userStore();
 const router = useRouter();
 const lagout = () => {
   localStorage.clear();
@@ -14,7 +15,10 @@ const lagout = () => {
 
 <template>
   <a-config-provider :locale="zhCN">
-    <a-layout-header class="a-layout-header">
+    <a-layout-header
+      v-if="useUserStore.isAuthenticated"
+      class="a-layout-header"
+    >
       <div class="user">
         <a>admin</a>
         <a-button size="small" @click="lagout">退出</a-button>
