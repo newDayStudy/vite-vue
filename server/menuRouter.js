@@ -1,7 +1,11 @@
 const express = require("express");
 const db = require("./mysql");
 const router = express.Router();
-const { getDate } = require("./utils");
+const fs = require("fs");
+const path = require("path");
+const startServer = require("./startServer");
+const { getDate, handleDeep } = require("./utils");
+const menus = require("../data/menus.json");
 router.get("/getMenus", (req, res) => {
   db(`SELECT * FROM menu_table`, (err, data) => {
     if (err) {
@@ -10,12 +14,10 @@ router.get("/getMenus", (req, res) => {
         message: "Internal Server Error",
       });
     } else {
-      // handleDeep(data)
-      console.log("menus", data);
       res.json({
         code: 200,
         data: {
-          records: [],
+          records: handleDeep(data),
         },
         message: "ok",
       });
@@ -23,14 +25,16 @@ router.get("/getMenus", (req, res) => {
   });
 });
 router.post("/addMenu", (req, res) => {
-  const { name, icon, path, parent_id, user_id, filepath, sort } = req.body;
+  const { name, icon, path, parent_id, user_id, filepath, sort, code } =
+    req.body;
   const parentId = parent_id || 0;
   const userId = user_id || 1;
   const create_time = getDate();
   const update_time = getDate();
   db(
-    `INSERT INTO menu_table (name, icon, path, parent_id, user_id, filepath, sort, create_time, update_time) values ('${name}', '${icon}', '${path}', ${parentId}, ${userId}, ${filepath}, ${sort}, ${create_time}, ${update_time})`,
+    `INSERT INTO menu_table (name, icon, path, parent_id, user_id, filepath, sort, create_time, update_time, code) values ('${name}', '${icon}', '${path}', ${parentId}, ${userId}, '${filepath}', ${sort}, '${create_time}', '${update_time}', '${code}')`,
     (err, data) => {
+      console.log(err);
       if (err) {
         res.json({
           code: 500,
@@ -82,5 +86,30 @@ router.post("/deleteMenu", (req, res) => {
       });
     }
   });
+});
+router.post("/getMenuByUserId", (req, res) => {
+  const userId = req.body.id;
+  startServer
+    ? db(`SELECT * FROM menu_table WHERE user_id=${userId}`, (err, data) => {
+        console.log(err);
+        if (err) {
+          res.json({
+            code: 500,
+            message: "Internal Server Error",
+          });
+        } else {
+          // fs.writeFile(path.resolve(__dirname, '../data/menus.json'), JSON.stringify(data), ['utf-8'], (err, data) => {})
+          res.json({
+            code: 200,
+            data: handleDeep(data),
+            message: "ok",
+          });
+        }
+      })
+    : res.json({
+        code: 200,
+        data: handleDeep(menus),
+        message: "ok",
+      });
 });
 module.exports = router;

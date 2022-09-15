@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import styleImport, {
+import {
+  createStyleImportPlugin,
   VantResolve,
   AndDesignVueResolve,
 } from "vite-plugin-style-import";
@@ -40,7 +41,7 @@ export default defineConfig({
   plugins: [
     vue(),
     // vueJsx(),
-    styleImport({
+    createStyleImportPlugin({
       resolves: [VantResolve(), AndDesignVueResolve()],
     }),
   ],

@@ -1,35 +1,24 @@
 <script setup>
 import { ref } from "vue";
 import { useRoute } from "vue-router";
+import { userStore } from "../store";
 const route = useRoute();
+const useUserStore = userStore();
 const selectedKeys = ref([route.name]);
 </script>
 
 <template>
   <a-layout class="a-layout">
-    <a-layout-sider theme="dark">
-      <a-menu v-model:selectedKeys="selectedKeys" mode="inline" theme="dark">
-        <a-menu-item key="user">
-          <router-link to="/user">用户管理</router-link>
-        </a-menu-item>
-        <a-menu-item key="menu">
-          <router-link to="/menu">菜单管理</router-link>
-        </a-menu-item>
-        <a-menu-item key="table">
-          <router-link to="/table">表格</router-link>
-        </a-menu-item>
-        <a-menu-item key="calendar">
-          <router-link to="/calendar"> 日历 </router-link>
-        </a-menu-item>
-        <a-menu-item key="form">
-          <router-link to="/form"> 表单 </router-link>
-        </a-menu-item>
-        <a-menu-item key="question">
-          <router-link to="/question"> 问卷 </router-link>
-        </a-menu-item>
-        <a-menu-item key="test">
-          <router-link to="/test"> 测试 </router-link>
-        </a-menu-item>
+    <a-layout-sider theme="light">
+      <a-menu v-model:selectedKeys="selectedKeys" mode="inline" theme="light">
+        <a-sub-menu v-for="item in useUserStore.menus" :key="item.id">
+          <template #title
+            ><a-icon :type="item.icon" /><span>{{ item.name }}</span></template
+          >
+          <a-menu-item v-for="sub in item.children" :key="sub.code">
+            <router-link :to="sub.path">{{ sub.name }}</router-link>
+          </a-menu-item>
+        </a-sub-menu>
       </a-menu>
     </a-layout-sider>
     <a-layout-content>

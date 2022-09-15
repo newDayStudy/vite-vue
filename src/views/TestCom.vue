@@ -35,7 +35,6 @@ const formItems = reactive([
     },
   },
   {
-    type: "Select",
     col: 8,
     formItemProps: {
       label: "性别",

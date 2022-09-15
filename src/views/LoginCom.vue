@@ -9,7 +9,7 @@ const formState = reactive({
 });
 const useUserStore = userStore();
 const router = useRouter();
-const onFinish = (values) => {
+const onFinish = async (values) => {
   console.log("Success:", values);
   useUserStore.bindUser(true);
   localStorage.setItem("isAuthenticated", true);

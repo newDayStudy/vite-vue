@@ -4,6 +4,7 @@ import { getMenus, addMenu } from "@/apis";
 import { reactive, onMounted, ref, unref, getCurrentInstance, h } from "vue";
 import Modal from "@/components/modal";
 import BaseFormVue from "@/components/form/BaseForm";
+import { Divider } from "ant-design-vue";
 import { useModal } from "@/components/modal/hooks/useModal";
 const [register, { open, close }] = useModal();
 const currentInstance = getCurrentInstance();
@@ -12,7 +13,7 @@ const notification =
 const columns = reactive([
   {
     title: "菜单编号",
-    dataIndex: "id",
+    dataIndex: "code",
   },
   {
     title: "菜单名称",
@@ -27,8 +28,26 @@ const columns = reactive([
     dataIndex: "path",
   },
   {
+    title: "菜单排序",
+    dataIndex: "sort",
+  },
+  {
     title: "操作",
     dataIndex: "action",
+    align: "center",
+    customRender({ record }) {
+      return h("div", [
+        h("a", {}, "编辑"),
+        record.parent_id == 0 &&
+          h(Divider, {
+            type: "vertical",
+          }),
+        record.parent_id == 0 &&
+          h("a", {
+            innerHTML: "新增",
+          }),
+      ]);
+    },
   },
 ]);
 
@@ -68,7 +87,6 @@ const formItems = reactive([
     formItemProps: {
       name: "path",
       label: "菜单路由",
-      rules: [{ required: true, message: "请输入菜单路由" }],
     },
     type: "Input",
   },
@@ -77,7 +95,6 @@ const formItems = reactive([
     formItemProps: {
       label: "文件路径",
       name: "filepath",
-      rules: [{ required: true, message: "请输入文件路径" }],
     },
     type: "Input",
   },
@@ -86,7 +103,6 @@ const formItems = reactive([
     formItemProps: {
       label: "菜单图标",
       name: "icon",
-      rules: [{ required: true, message: "请输入菜单图标" }],
     },
     type: "Input",
   },
@@ -103,10 +119,22 @@ const formItems = reactive([
 onMounted(() => {
   getMenuApi();
 });
+const form = reactive({
+  icon: "",
+  code: "",
+  name: "",
+  path: "",
+  filepath: "",
+  sort: "",
+});
 const formRef = ref();
 const callback = async () => {
   try {
     const values = await unref(formRef).$refs.ruleForm.validateFields();
+    if (form.parent_id) {
+      values.parent_id = form.parent_id;
+    }
+    console.log("values", values);
     addMenuApi(values);
     return true;
   } catch (errorInfo) {
@@ -122,20 +150,13 @@ const addMenuApi = async (params) => {
       notification.success({
         description: message,
       });
+      form.parent_id = "";
       getMenuApi();
     }
   } catch (error) {
     console.log(error);
   }
 };
-const form = reactive({
-  icon: "",
-  code: "",
-  name: "",
-  path: "",
-  filepath: "",
-  sort: "",
-});
 </script>
 <template>
   <a-layout class="a-layout">
@@ -145,7 +166,7 @@ const form = reactive({
           <a-button type="primary" @click="open">新增</a-button>
         </a-form-model-item>
       </a-form-model>
-      <Table :columns="columns" :data-source="dataSource" />
+      <Table row-key="id" :columns="columns" :data-source="dataSource" />
     </a-card>
     <Modal title="新增菜单" :submit="callback" @register="register">
       <BaseFormVue ref="formRef" v-model="form" :form-items="formItems" />

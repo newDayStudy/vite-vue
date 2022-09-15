@@ -14,6 +14,8 @@ export const updateArticle = (params) =>
   instance.post("/updateArticle", params);
 
 export const getRoles = (params) => instance.get("/getRoles", params);
+export const getMenuByUserId = (params) =>
+  instance.post("/getMenuByUserId", params);
 export default {
   getTableData(params) {
     return instance.post("getArticleList", params);
