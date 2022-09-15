@@ -22,12 +22,17 @@ router.beforeEach(async (to, from, next) => {
     const routesObj = await useUserStore.getMenus();
     router.addRoute(routesObj);
   }
+  console.log(router);
   if (to.name !== "login" && !localStorage.getItem("isAuthenticated")) {
     next({ name: "login" });
   } else if (
     (to.name == "login" || to.name == undefined) &&
     localStorage.getItem("isAuthenticated")
   ) {
+    const path = location.hash.substring(1);
+    if (path != "/home") {
+      next({ path, replace: true });
+    }
     next({ name: "home", replace: true });
   } else {
     next();
