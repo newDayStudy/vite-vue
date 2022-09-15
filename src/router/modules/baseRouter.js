@@ -22,7 +22,7 @@ export default [
       // {
       //   path: "/calendar",
       //   name: "calendar",
-      //   component: () => import("@/views/CalendarCom.vue"),
+      //   component: () => import("@/views/CalenderCom.vue"),
       // },
       // {
       //   path: "/table",
