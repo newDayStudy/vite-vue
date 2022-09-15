@@ -4,6 +4,9 @@ module.exports = {
     parser: "@babel/eslint-parser",
     sourceType: "module",
     requireConfigFile: false,
+    babelOptions: {
+      presets: ["@babel/preset-react"],
+    },
   },
   env: {
     browser: true,
