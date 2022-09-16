@@ -20,3 +20,8 @@ data 目录存放表的数据
 ### 若无数据库
 
 打开文件 server/startServer.js startServer 改为 false,使用本地数据
+
+### 使用 mock 数据
+
+vite.config.js 中 localEnable: true
+apis/http.js 中 baseURL 注释
