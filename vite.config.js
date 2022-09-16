@@ -6,8 +6,9 @@ import {
   AndDesignVueResolve,
 } from "vite-plugin-style-import";
 import vueJsx from "@vitejs/plugin-vue-jsx";
+import { viteMockServe } from "vite-plugin-mock";
 import path from "path";
-// https://vitejs.dev/config/
+
 export default defineConfig({
   resolve: {
     alias: {
@@ -44,8 +45,9 @@ export default defineConfig({
     createStyleImportPlugin({
       resolves: [VantResolve(), AndDesignVueResolve()],
     }),
+    viteMockServe({
+      mockPath: "/src/mock",
+      localEnabled: true,
+    }),
   ],
-  server: {
-    hmr: true,
-  },
 });

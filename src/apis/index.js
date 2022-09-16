@@ -16,14 +16,3 @@ export const updateArticle = (params) =>
 export const getRoles = (params) => instance.get("/getRoles", params);
 export const getMenuByUserId = (params) =>
   instance.post("/getMenuByUserId", params);
-export default {
-  getTableData(params) {
-    return instance.post("getArticleList", params);
-  },
-  deleteRowData(params) {
-    return instance.post("deleteArticle", params);
-  },
-  addQuestion(params) {
-    return instance.post("addQuestion", params);
-  },
-};

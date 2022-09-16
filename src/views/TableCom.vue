@@ -1,6 +1,11 @@
 <script setup>
 import { reactive, h, ref, unref, onMounted, computed } from "vue";
-import apis, { updateArticle, exportExcel } from "@/apis";
+import {
+  updateArticle,
+  exportExcel,
+  getTableData,
+  deleteRowData,
+} from "@/apis";
 import Table from "@/components/table/Table.vue";
 import Modal from "@/components/modal";
 import Form from "@/components/form/Form";
@@ -146,16 +151,16 @@ const change = (page) => {
   console.log("页码：", page.current);
   pagination.current = page.current;
   pagination.pageSize = page.pageSize;
-  getTableData();
+  getTableDataApi();
 };
 const deleteRow = async (id) => {
-  const res = await apis.deleteRowData({
+  const res = await deleteRowData({
     id,
   });
   const { code, message } = res;
   if (code == 200) {
     alert(message);
-    getTableData();
+    getTableDataApi();
   } else {
     alert(message);
   }
@@ -165,7 +170,7 @@ const deleteRows = async () => {
   await deleteRow(selectedRowKeys.join(","));
   if (selectedRowKeys.length == state.dataSource.length) {
     pagination.current = pagination.current - 1 || 1;
-    getTableData();
+    getTableDataApi();
   }
 };
 const selections = reactive([
@@ -194,14 +199,14 @@ const updateRow = async (values) => {
   });
   if (res.code == 200) {
     alert(res.message);
-    getTableData();
+    getTableDataApi();
     state.record = {};
   } else {
     alert(res.message);
   }
 };
-const getTableData = async () => {
-  const res = await apis.getTableData({
+const getTableDataApi = async () => {
+  const res = await getTableData({
     current: pagination.current,
     pageSize: pagination.pageSize,
   });
@@ -209,7 +214,7 @@ const getTableData = async () => {
   state.dataSource = records;
   pagination.total = total;
 };
-onMounted(getTableData);
+onMounted(getTableDataApi);
 
 const exportExcelEvent = async () => {
   const res = await exportExcel({

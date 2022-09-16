@@ -1,9 +1,10 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { userStore } from "@/store";
-import { watch, reactive, computed } from "vue";
+import { watch, reactive, computed, onMounted } from "vue";
 import zhCN from "ant-design-vue/es/locale/zh_CN";
 import dayjs from "dayjs";
+import axios from "axios";
 import "dayjs/locale/zh-cn";
 import src from "@/assets/logo.png";
 dayjs.locale("zhCN");

@@ -18,11 +18,10 @@ import { userStore } from "@/store";
 router.beforeEach(async (to, from, next) => {
   nProgress.start();
   const useUserStore = userStore();
-  if (!useUserStore.menus.length) {
+  if (!useUserStore.menus.length && localStorage.getItem("isAuthenticated")) {
     const routesObj = await useUserStore.getMenus();
     router.addRoute(routesObj);
   }
-  console.log(router);
   if (to.name !== "login" && !localStorage.getItem("isAuthenticated")) {
     next({ name: "login" });
   } else if (

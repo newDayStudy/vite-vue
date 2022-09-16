@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { getMenuByUserId } from "@/apis";
 const modules = import.meta.glob("../views/**.vue");
+
 export const userStore = defineStore("user", {
   state: () => {
     return {
@@ -24,7 +25,7 @@ export const userStore = defineStore("user", {
           component: () => import("@/views/HomeCom.vue"),
           children: [],
         };
-        const flat = res.data.reduce((prev, cur) => {
+        const flat = this.menus.reduce((prev, cur) => {
           return prev.concat(cur.children);
         }, []);
         flat
