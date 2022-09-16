@@ -46,8 +46,8 @@ export default defineConfig({
       resolves: [VantResolve(), AndDesignVueResolve()],
     }),
     viteMockServe({
-      mockPath: "/src/mock",
-      localEnabled: true,
+      mockPath: "./src/mock",
+      localEnabled: false,
     }),
   ],
 });

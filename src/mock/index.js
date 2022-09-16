@@ -2,6 +2,7 @@ import articleList from "../../data/articleList.json";
 import Menus from "../../data/menus.json";
 import question from "../../data/question.json";
 import topic from "../../data/topic.json";
+import users from "../../data/user.json";
 function handleDeep(data) {
   const newArr = [...data];
   const length = newArr.length;
@@ -63,6 +64,17 @@ export default [
         code: 200,
         message: "ok",
         data: topic,
+      };
+    },
+  },
+  {
+    url: "/getUsers",
+    method: "get",
+    response: () => {
+      return {
+        code: 200,
+        message: "ok",
+        data: users,
       };
     },
   },

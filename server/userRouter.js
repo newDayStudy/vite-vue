@@ -3,6 +3,8 @@ const db = require("./mysql");
 const router = express.Router();
 const { getDate } = require("./utils");
 const { getToken, setToken } = require("./utils/secret");
+const fs = require("fs");
+const path = require("path");
 router.get("/getRoles", (req, res) => {
   db("SELECT * FROM user_role_table", (err, data) => {
     if (err) {
@@ -40,6 +42,7 @@ router.post("/getUsers", (req, res) => {
             message: "Internal Server Error",
           });
         } else {
+          // fs.writeFile(path.resolve(__dirname, '../data/user.json'), JSON.stringify(data), ['utf-8'], (err, data) => {})
           res.json({
             code: 200,
             data: {
