@@ -19,9 +19,11 @@ import {
   Menu,
   Spin,
   notification,
+  TreeSelect,
 } from "ant-design-vue";
 function antdRegisterComponent(app) {
   app
+    .use(TreeSelect)
     .use(InputNumber)
     .use(InputPassword)
     .use(Spin)
