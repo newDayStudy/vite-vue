@@ -12,8 +12,9 @@ const selectedKeys = ref([route.name]);
     <a-layout-sider theme="light">
       <a-menu v-model:selectedKeys="selectedKeys" mode="inline" theme="light">
         <a-sub-menu v-for="item in useUserStore.menus" :key="item.id">
-          <template #title
-            ><a-icon :type="item.icon" /><span>{{ item.name }}</span></template
+          <template #title>
+            <!-- <a-icon :type="item.icon" /> -->
+            <span>{{ item.name }}</span></template
           >
           <a-menu-item v-for="sub in item.children" :key="sub.code">
             <router-link :to="sub.path">{{ sub.name }}</router-link>
