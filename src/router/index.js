@@ -22,6 +22,16 @@ router.beforeEach(async (to, from, next) => {
     const routesObj = await useUserStore.getMenus();
     router.addRoute(routesObj);
   }
+  // 记录ip地址
+  useUserStore.getIP((ip) => {
+    if (to.meta.pathname) {
+      useUserStore.setIp({
+        ip,
+        pathname: to.meta.pathname,
+        path: to.path,
+      });
+    }
+  });
   if (to.name !== "login" && !localStorage.getItem("isAuthenticated")) {
     next({ name: "login" });
   } else if (

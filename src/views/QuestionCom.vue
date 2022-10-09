@@ -62,8 +62,12 @@ const onsubmit = () => {
   </a-layout>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .a-layout {
+  overflow-y: auto;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 20px;
   h3.title {
     margin-bottom: 30px;
     text-align: center;

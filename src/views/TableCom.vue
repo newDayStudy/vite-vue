@@ -264,6 +264,6 @@ const exportExcelEvent = async () => {
   overflow-y: auto;
   box-sizing: border-box;
   height: 100%;
-  padding: 30px;
+  padding: 20px;
 }
 </style>

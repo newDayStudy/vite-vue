@@ -4,7 +4,6 @@ import { reactive, h, ref, onMounted } from "vue";
 import { Select, TreeSelect } from "ant-design-vue";
 import BaseFormJsx from "@/components/form/BaseFormVue.jsx";
 const SHOW_PARENT = TreeSelect.SHOW_PARENT;
-
 const treeData = [
   {
     title: "Node1",
@@ -174,7 +173,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
+  <a-layout class="a-layout">
     <a-card>
       <BaseFormVue v-model="form" :form-items="formItems" />
       <p>
@@ -214,5 +213,13 @@ onMounted(() => {
     <a-card>
       <canvas id="canvas" ref="canvas"></canvas>
     </a-card>
-  </div>
+  </a-layout>
 </template>
+<style lang="scss" scoped>
+.a-layout {
+  overflow-y: auto;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 20px;
+}
+</style>

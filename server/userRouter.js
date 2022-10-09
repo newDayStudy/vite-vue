@@ -22,7 +22,6 @@ router.get("/getRoles", (req, res) => {
   });
 });
 router.post("/getUsers", (req, res) => {
-  console.log(req.body);
   const { pageSize, current } = req.body;
   const offset = (current - 1) * pageSize;
   db("SELECT count(*) as total FROM user_table", (err, d) => {
@@ -119,5 +118,25 @@ router.post("/deleteUser", (req, res) => {
       });
     }
   });
+});
+
+router.post("/setIp", (req, res) => {
+  const { ip, path, pathname } = req.body;
+  const create_time = getDate();
+  db(
+    `INSERT INTO visite_record_table (ip, pathname, path, create_time) values ('${ip}', '${pathname}', '${path}', '${create_time}')`,
+    (err, d) => {
+      if (err) {
+        console.log("记录ip地址失败");
+      } else {
+        console.log("记录ip地址成功");
+        res.json({
+          code: 200,
+          data: null,
+          message: "ok",
+        });
+      }
+    }
+  );
 });
 module.exports = router;

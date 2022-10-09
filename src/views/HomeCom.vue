@@ -1,10 +1,19 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { userStore } from "../store";
 const route = useRoute();
 const useUserStore = userStore();
-const selectedKeys = ref([route.name]);
+const selectedKeys = ref([]);
+watch(
+  () => route,
+  (v) => {
+    console.log("路由变化", v);
+    selectedKeys.value = [v.name];
+    console.log("selectedKeys", selectedKeys);
+  },
+  { deep: true, immediate: true }
+);
 </script>
 
 <template>
