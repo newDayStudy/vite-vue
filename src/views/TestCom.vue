@@ -131,7 +131,6 @@ const formItems1 = reactive([
     },
   },
   {
-    // type: 'Select',
     col: 8,
     formItemProps: {
       label: "性别",
@@ -176,11 +175,16 @@ onMounted(() => {
 
 <template>
   <div>
-    <!--    <canvas ref="canvas" id="canvas"></canvas>-->
     <a-card>
       <BaseFormVue v-model="form" :form-items="formItems" />
-      <a-button @click="getFormValue">获取form值</a-button>
+      <p>
+        <a-button @click="getFormValue">获取form值</a-button>
+      </p>
+    </a-card>
+    <a-card>
       <BaseFormJsx v-model="form" :form-items="formItems1" />
+    </a-card>
+    <a-card>
       <a-form :model="treeForm">
         <a-form-item
           label="树"
@@ -206,6 +210,9 @@ onMounted(() => {
           <a-button @click="submit">提交</a-button>
         </a-form-item>
       </a-form>
+    </a-card>
+    <a-card>
+      <canvas id="canvas" ref="canvas"></canvas>
     </a-card>
   </div>
 </template>

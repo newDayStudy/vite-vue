@@ -1,4 +1,4 @@
-import { defineComponent, isReactive, ref } from "vue";
+import { defineComponent } from "vue";
 import formItemMap from "./FormItem";
 export default defineComponent({
   props: {
@@ -20,7 +20,7 @@ export default defineComponent({
       // 组件 必须用v-model:value, 否则无法绑定值
       const componentName = formItemMap.get(item.type);
       return (
-        <a-col>
+        <a-col span={item.col}>
           <a-form-item {...item.formItemProps}>
             {item.customRender ? (
               item.customRender(item)
@@ -36,7 +36,7 @@ export default defineComponent({
     };
     return () => (
       <a-form model={props.modelValue} {...props.formProps}>
-        <a-row>
+        <a-row gutter={[32, 32]}>
           {props.formItems.map((item) => {
             if (Array.isArray(item)) {
               return item.map((item) => {
