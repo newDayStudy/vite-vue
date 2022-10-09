@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="jsx">
 import BaseFormVue from "../components/form/BaseForm.vue";
 import { reactive, h, ref, onMounted } from "vue";
 import { Select, TreeSelect } from "ant-design-vue";
@@ -139,20 +139,16 @@ const formItems1 = reactive([
       rules: [{ required: true, message: "不能为空", trigger: "change" }],
     },
     customRender(item) {
-      return h(Select, {
-        value: form[item.formItemProps.name],
-        style: {
-          width: "200px",
-        },
-        onChange(e) {
-          form[item.formItemProps.name] = e;
-        },
-        allowClear: true,
-        options: [
-          { label: "男", value: "1" },
-          { label: "女", value: "0" },
-        ],
-      });
+      return (
+        <a-select
+          v-model:value={form[item.formItemProps.name]}
+          allowClear={true}
+          style="width: 200px;"
+        >
+          <a-select-option value="1">男</a-select-option>
+          <a-select-option value="0">女</a-select-option>
+        </a-select>
+      );
     },
   },
 ]);
