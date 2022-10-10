@@ -96,5 +96,6 @@ module.exports = {
     "object-curly-spacing": 0,
     "no-unused-expressions": 0,
     "vue/no-mutating-props": 0,
+    "vue/multi-word-component-names": 0,
   },
 };

@@ -76,7 +76,7 @@ const baseRowSelection = reactive({
 
 const rowSelection = computed(() => {
   if (typeof props.selectedType === "boolean") {
-    return false;
+    return null;
   }
   return baseRowSelection;
 });
