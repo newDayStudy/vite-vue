@@ -22,7 +22,18 @@ import {
   TreeSelect,
   Select,
 } from "ant-design-vue";
+
+import {
+  UserOutlined,
+  BorderlessTableOutlined,
+  FileAddOutlined,
+} from "@ant-design/icons-vue";
 function antdRegisterComponent(app) {
+  app
+    .component("UserOutlined", UserOutlined)
+    .component("borderless-table-outlined", BorderlessTableOutlined)
+    .component("file-add-outlined", FileAddOutlined);
+
   app
     .use(Select)
     .use(TreeSelect)

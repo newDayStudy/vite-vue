@@ -7,6 +7,7 @@ export const userStore = defineStore("user", {
     return {
       isAuthenticated: localStorage.getItem("isAuthenticated") || false,
       menus: [],
+      collapsed: false,
     };
   },
   actions: {

@@ -18,11 +18,11 @@ watch(
 
 <template>
   <a-layout class="a-layout">
-    <a-layout-sider theme="dark">
+    <a-layout-sider theme="dark" :collapsed="useUserStore.collapsed">
       <a-menu v-model:selectedKeys="selectedKeys" mode="inline" theme="dark">
         <a-sub-menu v-for="item in useUserStore.menus" :key="item.id">
           <template #title>
-            <!-- <a-icon :type="item.icon" /> -->
+            <component :is="item.icon" />
             <span>{{ item.name }}</span></template
           >
           <a-menu-item v-for="sub in item.children" :key="sub.code">
