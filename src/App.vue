@@ -36,11 +36,12 @@ watch(
       class="a-layout-header"
     >
       <!-- <img :src="logo" width="30"/> -->
-      <img src="@/assets/logo.png" width="30" height="30" />
+      <!-- <img src="@/assets/logo.png" width="30" height="30" /> -->
+      <span style="color: #fff; font-size: 18px">Vite+Vue3+Antdv</span>
       <!-- <img :src="src" alt=""> -->
       <div class="user">
         <a>admin</a>
-        <a-button size="small" @click="logout">退出</a-button>
+        <span @click="logout">退出</span>
       </div>
     </a-layout-header>
     <a-layout-content
@@ -84,7 +85,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fff;
+  // background-color: #fff;
   img {
     flex: none;
   }
@@ -93,8 +94,10 @@ body {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  color: #fff;
   a {
     margin-right: 10px;
+    color: #fff;
   }
 }
 </style>

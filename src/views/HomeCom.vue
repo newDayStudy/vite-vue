@@ -18,8 +18,8 @@ watch(
 
 <template>
   <a-layout class="a-layout">
-    <a-layout-sider theme="light">
-      <a-menu v-model:selectedKeys="selectedKeys" mode="inline" theme="light">
+    <a-layout-sider theme="dark">
+      <a-menu v-model:selectedKeys="selectedKeys" mode="inline" theme="dark">
         <a-sub-menu v-for="item in useUserStore.menus" :key="item.id">
           <template #title>
             <!-- <a-icon :type="item.icon" /> -->
