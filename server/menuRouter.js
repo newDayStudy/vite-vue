@@ -2,7 +2,7 @@ const express = require("express");
 const db = require("./mysql");
 const router = express.Router();
 const fs = require("fs");
-const path = require("path");
+const pathNode = require("path");
 const startServer = require("./startServer");
 const { getDate, handleDeep } = require("./utils");
 const menus = require("../data/menus.json");
@@ -41,7 +41,25 @@ router.post("/addMenu", (req, res) => {
           message: "Interval Server Error",
         });
       } else {
-        fs.mkdirSync(path.resolve(__dirname, `../src/views/${filepath}.vue`));
+        fs.writeFile(
+          pathNode.resolve(__dirname, `../src/views/${filepath}.vue`),
+          `
+<script setup>
+
+</script>
+
+<template>
+  <a-layout class="a-layout">${filepath}</a-layout>
+</template>
+        `,
+          (e, d) => {
+            if (e) {
+              console.log("创建失败", e);
+            } else {
+              console.log("创建成功");
+            }
+          }
+        );
         res.json({
           code: 200,
           data: null,

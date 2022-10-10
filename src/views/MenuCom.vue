@@ -45,6 +45,10 @@ const columns = reactive([
         record.parent_id == 0 &&
           h("a", {
             innerHTML: "新增",
+            onClick() {
+              open();
+              form.parent_id = record.id;
+            },
           }),
       ]);
     },
@@ -161,11 +165,11 @@ const addMenuApi = async (params) => {
 <template>
   <a-layout class="a-layout">
     <a-card>
-      <a-form-model>
-        <a-form-model-item>
+      <a-form>
+        <a-form-item>
           <a-button type="primary" @click="open">新增</a-button>
-        </a-form-model-item>
-      </a-form-model>
+        </a-form-item>
+      </a-form>
       <Table row-key="id" :columns="columns" :data-source="dataSource" />
     </a-card>
     <Modal title="新增菜单" :submit="callback" @register="register">
