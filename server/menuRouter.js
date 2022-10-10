@@ -41,6 +41,7 @@ router.post("/addMenu", (req, res) => {
           message: "Interval Server Error",
         });
       } else {
+        fs.mkdirSync(path.resolve(__dirname, `../src/views/${filepath}.vue`));
         res.json({
           code: 200,
           data: null,

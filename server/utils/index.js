@@ -16,6 +16,9 @@ function handleDeep(data) {
         k.children.push(j);
       }
     }
+    if (!k.children.length) {
+      k.children = null;
+    }
     values.push(k);
   }
   return data.filter((item) => !item.used);
