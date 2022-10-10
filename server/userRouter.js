@@ -123,20 +123,59 @@ router.post("/deleteUser", (req, res) => {
 router.post("/setIp", (req, res) => {
   const { ip, path, pathname } = req.body;
   const create_time = getDate();
-  db(
-    `INSERT INTO visite_record_table (ip, pathname, path, create_time) values ('${ip}', '${pathname}', '${path}', '${create_time}')`,
-    (err, d) => {
-      if (err) {
-        console.log("记录ip地址失败");
-      } else {
-        console.log("记录ip地址成功");
-        res.json({
-          code: 200,
-          data: null,
-          message: "ok",
-        });
+  db(`SELECT * FROM visite_record_table`, (e, d) => {
+    if (e) {
+      console.log(e);
+    } else {
+      if (d.length) {
+        const last = d[d.length - 1];
+        if (last.path != path) {
+          db(
+            `INSERT INTO visite_record_table (ip, pathname, path, create_time) values ('${ip}', '${pathname}', '${path}', '${create_time}')`,
+            (err, d) => {
+              if (err) {
+                console.log("记录ip地址失败");
+              } else {
+                console.log("记录ip地址成功");
+                res.json({
+                  code: 200,
+                  data: null,
+                  message: "ok",
+                });
+              }
+            }
+          );
+        } else {
+          res.json({
+            code: 200,
+            data: null,
+            message: "ok",
+          });
+        }
       }
     }
-  );
+  });
+});
+router.get("/getIp", (req, res) => {
+  db(`SELECT * FROM visite_record_table`, (err, data) => {
+    if (err) {
+      res.json({
+        code: 500,
+        data: null,
+        message: "Interval server error",
+      });
+    } else {
+      res.json({
+        code: 200,
+        data: data.map((item) => {
+          return {
+            ...item,
+            create_time: new Date(item.create_time).toLocaleDateString(),
+          };
+        }),
+        message: "ok",
+      });
+    }
+  });
 });
 module.exports = router;

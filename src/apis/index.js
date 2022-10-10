@@ -16,3 +16,4 @@ export const getRoles = (params) => http.get("/getRoles", params);
 export const getMenuByUserId = (params) =>
   http.post("/getMenuByUserId", params);
 export const setIp = (params) => http.post("/setIp", params);
+export const getIp = (params) => http.get("/getIp", params);
