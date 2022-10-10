@@ -113,5 +113,44 @@ router.get("/getTopic", (req, res) => {
         message: "ok",
       });
 });
-
+router.post("/answer", (req, res) => {
+  const { content } = req.body;
+  db(`SELECT * from user_answer_table WHERE user_id=1`, (e, d) => {
+    if (e) {
+      res.json({
+        code: 500,
+        data: null,
+        message: "Interval Server Error",
+      });
+    } else {
+      if (!d.length) {
+        db(
+          `INSERT INTO user_answer_table (user_id, content) values (1, '${content}')`,
+          (err, data) => {
+            if (err) {
+              console.log(err);
+              res.json({
+                code: 500,
+                data: null,
+                message: "Interval server error",
+              });
+            } else {
+              res.json({
+                code: 200,
+                data: null,
+                message: "ok",
+              });
+            }
+          }
+        );
+      } else {
+        res.json({
+          code: 200,
+          data: null,
+          message: "不能重复答题！",
+        });
+      }
+    }
+  });
+});
 module.exports = router;

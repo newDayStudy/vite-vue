@@ -1,7 +1,9 @@
 <script setup>
-import { getTopic } from "@/apis";
-import { onMounted, ref, shallowRef, toRaw } from "vue";
+import { getTopic, answer } from "@/apis";
+import { onMounted, ref, shallowRef, toRaw, getCurrentInstance } from "vue";
 import { CheckboxGroup, RadioGroup } from "ant-design-vue";
+const notification =
+  getCurrentInstance().appContext.config.globalProperties.notification;
 const componentsMap = new Map();
 componentsMap.set("0", shallowRef(CheckboxGroup));
 componentsMap.set("1", shallowRef(RadioGroup));
@@ -23,7 +25,7 @@ const getTopic_ = async () => {
 };
 onMounted(getTopic_);
 
-const onsubmit = () => {
+const onsubmit = async () => {
   const res = data.value
     .filter((item) => item.checked)
     .map((item) => {
@@ -31,8 +33,32 @@ const onsubmit = () => {
         question_id: item.id,
         answer_id: toRaw(item.checked),
       };
+    })
+    .map((item) => {
+      return {
+        question_id: item.question_id,
+        answer_id: Array.isArray(item.answer_id)
+          ? item.answer_id.join(",")
+          : item.answer_id,
+      };
     });
+  if (res.length != data.value.length) {
+    notification.warning({
+      description: "答题尚未完成！",
+    });
+    return;
+  }
   console.log("选择的结果", res);
+  try {
+    const result = await answer({
+      content: JSON.stringify(res),
+    });
+    notification.success({
+      description: result.message,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 </script>
 

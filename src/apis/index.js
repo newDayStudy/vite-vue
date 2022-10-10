@@ -17,3 +17,4 @@ export const getMenuByUserId = (params) =>
   http.post("/getMenuByUserId", params);
 export const setIp = (params) => http.post("/setIp", params);
 export const getIp = (params) => http.get("/getIp", params);
+export const answer = (params) => http.post("/answer", params);
