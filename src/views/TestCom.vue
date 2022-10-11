@@ -158,18 +158,6 @@ const treeForm = reactive({
 const submit = () => {
   console.log(treeForm);
 };
-const canvas = ref(null);
-console.log(canvas);
-const draw = () => {
-  const ctx = canvas.value.getContext("2d");
-  ctx.lineTo(10, 20);
-  ctx.lineTo(20, 40);
-  ctx.lineTo(40, 80);
-  ctx.stroke();
-};
-onMounted(() => {
-  console.log(canvas.value);
-});
 </script>
 
 <template>
@@ -209,9 +197,6 @@ onMounted(() => {
           <a-button @click="submit">提交</a-button>
         </a-form-item>
       </a-form>
-    </a-card>
-    <a-card>
-      <canvas id="canvas" ref="canvas"></canvas>
     </a-card>
   </a-layout>
 </template>
