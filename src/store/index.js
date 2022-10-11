@@ -79,7 +79,7 @@ export const userStore = defineStore("user", {
         const routeObj = {
           path: "/home",
           name: "home",
-          component: () => import("@/views/HomeCom.vue"),
+          component: () => import("@/views/HomeCom.vue?chunkName=home"),
           children: [],
         };
         const flat = this.menus.reduce((prev, cur) => {
