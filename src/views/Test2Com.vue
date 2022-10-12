@@ -34,10 +34,16 @@ onMounted(async () => {
     title: {
       text: "不同时间段菜单访问次数",
     },
+    legend: {
+      type: "scroll",
+      top: 30,
+      left: 0,
+      data: path,
+    },
     grid: {
       left: 25,
       right: 20,
-      top: 50,
+      top: 90,
       bottom: 20,
     },
     tooltip: {

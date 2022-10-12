@@ -9,6 +9,7 @@ import {
   GridComponent,
   DatasetComponent,
   TransformComponent,
+  LegendComponent,
 } from "echarts/components";
 // 标签自动布局，全局过渡动画等特性
 import { LabelLayout, UniversalTransition } from "echarts/features";
@@ -17,6 +18,7 @@ import { CanvasRenderer } from "echarts/renderers";
 
 // 注册必须的组件
 echarts.use([
+  LegendComponent,
   TitleComponent,
   TooltipComponent,
   GridComponent,
