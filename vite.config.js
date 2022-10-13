@@ -8,6 +8,7 @@ import {
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import { viteMockServe } from "vite-plugin-mock";
 import path from "path";
+import compressPlugin from "vite-plugin-compression";
 
 export default defineConfig({
   base: "./",
@@ -43,6 +44,10 @@ export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
+    compressPlugin({
+      ext: ".gz",
+      deleteOriginFile: true,
+    }),
     createStyleImportPlugin({
       resolves: [VantResolve(), AndDesignVueResolve()],
     }),

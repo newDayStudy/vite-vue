@@ -21,6 +21,8 @@ import {
   notification,
   TreeSelect,
   Select,
+  Drawer,
+  Tree,
 } from "ant-design-vue";
 
 import {
@@ -35,6 +37,8 @@ function antdRegisterComponent(app) {
     .component("file-add-outlined", FileAddOutlined);
 
   app
+    .use(Tree)
+    .use(Drawer)
     .use(Select)
     .use(TreeSelect)
     .use(InputNumber)
