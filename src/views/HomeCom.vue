@@ -44,7 +44,22 @@ watch(
       </a-menu>
     </a-layout-sider>
     <a-layout-content>
-      <router-view></router-view>
+      <router-view v-if="route.name != 'home'"></router-view>
+      <a-layout v-else>
+        <h1 class="welcome">欢迎进入<i>Welcome</i></h1>
+      </a-layout>
     </a-layout-content>
   </a-layout>
 </template>
+
+<style lang="scss" scoped>
+.welcome {
+  padding: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  i {
+    font-size: 14px;
+    font-style: normal;
+  }
+}
+</style>
