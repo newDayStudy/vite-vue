@@ -18,3 +18,8 @@ export const getMenuByUserId = (params) =>
 export const setIp = (params) => http.post("/setIp", params);
 export const getIp = (params) => http.get("/getIp", params);
 export const answer = (params) => http.post("/answer", params);
+export const setRoles = (params) => http.post("/setRoles", params);
+export const getUserRole = (params) => http.post("/getUserRole", params);
+export const getRolesByRoleId = (params) =>
+  http.post("/getRolesByRoleId", params);
+export const login = (params) => http.post("/login", params);

@@ -5,6 +5,27 @@ const { getDate } = require("./utils");
 const { getToken, setToken } = require("./utils/secret");
 const fs = require("fs");
 const path = require("path");
+router.post("/login", (req, res) => {
+  const { username, password } = req.body;
+  db(
+    `SELECT * FROM user_table WHERE username='${username}' and password='${password}'`,
+    (err, data) => {
+      if (err) {
+        res.json({
+          code: 500,
+          data: null,
+          message: "Interval Server Error",
+        });
+      } else {
+        res.json({
+          code: 200,
+          data: data.length ? data[0] : null,
+          message: "ok",
+        });
+      }
+    }
+  );
+});
 router.get("/getRoles", (req, res) => {
   db("SELECT * FROM user_role_table", (err, data) => {
     if (err) {
@@ -20,6 +41,104 @@ router.get("/getRoles", (req, res) => {
       });
     }
   });
+});
+router.post("/getRolesByRoleId", (req, res) => {
+  const { roleId } = req.body;
+  db(
+    `SELECT * FROM user_role_menu_table WHERE roleId=${roleId}`,
+    (err, data) => {
+      if (err) {
+        res.json({
+          code: 500,
+          data: null,
+          message: "Interval Server Error",
+        });
+      } else {
+        res.json({
+          code: 200,
+          data,
+          message: "ok",
+        });
+      }
+    }
+  );
+});
+router.post("/setRoles", (req, res) => {
+  const { roleId, permission } = req.body;
+  const create_time = getDate();
+  const update_time = getDate();
+  db(`SELECT * FROM user_role_menu_table WHERE roleId=${roleId}`, (e, d) => {
+    if (e) {
+      res.json({
+        code: 500,
+        data: null,
+        message: "Interval Server Error",
+      });
+    } else {
+      if (d.length) {
+        db(
+          `UPDATE user_role_menu_table SET permission='${permission}', update_time='${update_time}' WHERE roleId=${roleId}`,
+          (err, data) => {
+            if (err) {
+              console.log(err);
+              res.json({
+                code: 500,
+                data: null,
+                message: "Interval Server Error",
+              });
+            } else {
+              res.json({
+                code: 200,
+                data: null,
+                message: "ok",
+              });
+            }
+          }
+        );
+      } else {
+        db(
+          `INSERT INTO user_role_menu_table (roleId, permission, create_time, update_time) values (${roleId}, '${permission}', '${create_time}', '${update_time}')`,
+          (err, data) => {
+            if (err) {
+              console.log("err", err);
+              res.json({
+                code: 500,
+                data: null,
+                message: "Interval Server Error",
+              });
+            } else {
+              res.json({
+                code: 200,
+                data: null,
+                message: "ok",
+              });
+            }
+          }
+        );
+      }
+    }
+  });
+});
+router.post("/getUserRole", (req, res) => {
+  const { roleId } = req.body;
+  db(
+    `SELECT * FROM user_role_menu_table WHERE roleId=${roleId}`,
+    (err, data) => {
+      if (err) {
+        res.json({
+          code: 500,
+          data: null,
+          message: "Interval Server Error",
+        });
+      } else {
+        res.json({
+          code: 200,
+          data: data.length ? data[0] : null,
+          message: "ok",
+        });
+      }
+    }
+  );
 });
 router.post("/getUsers", (req, res) => {
   const { pageSize, current } = req.body;

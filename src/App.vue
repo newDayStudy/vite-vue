@@ -11,16 +11,15 @@ const useUserStore = userStore();
 const router = useRouter();
 const logout = () => {
   localStorage.clear();
-  useUserStore.bindUser(false);
+  useUserStore.bindUser(null);
   router.push("/login");
 };
 const padding = reactive({
   top: 0,
 });
 watch(
-  () => useUserStore.isAuthenticated,
+  () => useUserStore.user,
   (v) => {
-    console.log("isAuthenticated", v);
     padding.top = v ? "60px" : 0;
     console.log("padding", padding);
   }
@@ -30,16 +29,13 @@ watch(
 
 <template>
   <a-config-provider :locale="zhCN">
-    <a-layout-header
-      v-if="useUserStore.isAuthenticated"
-      class="a-layout-header"
-    >
+    <a-layout-header v-if="useUserStore.user" class="a-layout-header">
       <!-- <img :src="logo" width="30"/> -->
       <!-- <img src="@/assets/logo.png" width="30" height="30" /> -->
       <span style="color: #fff; font-size: 18px">Vite+Vue3+Antdv</span>
       <!-- <img :src="src" alt=""> -->
       <div class="user">
-        <a>admin</a>
+        <a>{{ useUserStore.user?.username }}</a>
         <span @click="logout">退出</span>
       </div>
     </a-layout-header>

@@ -49,8 +49,23 @@ router.post("/addMenu", (req, res) => {
 </script>
 
 <template>
-  <a-layout class="a-layout">${filepath}</a-layout>
+  <a-layout class="a-layout">
+    <a-card>
+    ${filepath}
+    </a-card>
+  </a-layout>
 </template>
+
+<style lang="scss" scoped>
+
+.a-layout {
+  overflow-y: auto;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 20px;
+}
+
+</style>
         `,
           (e, d) => {
             if (e) {

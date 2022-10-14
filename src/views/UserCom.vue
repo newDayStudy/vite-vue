@@ -1,6 +1,6 @@
 <script setup>
 import Table from "@/components/table/Table";
-import { getUsers, getRoles, addUser, getMenus } from "@/apis";
+import { getUsers, getRoles, addUser } from "@/apis";
 import { reactive, onMounted, ref, unref, getCurrentInstance, h } from "vue";
 import Modal from "@/components/modal";
 import Form from "@/components/form/Form";
@@ -167,33 +167,10 @@ const addUserApi = async (params) => {
   }
 };
 
-const visibleDrawer = ref(false);
-const treeData = ref([]);
-const selectedKeys = ref([]);
-
-const getMenusApi = async () => {
-  try {
-    const res = await getMenus();
-    console.log("", res);
-    treeData.value = res.data.records;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 onMounted(() => {
   getUsersApi();
   getRolesApi();
-  getMenusApi();
 });
-
-const onSave = () => {
-  console.log("点击了提交按钮");
-  console.log(selectedKeys.value);
-};
-const onClose = () => {
-  visibleDrawer.value = false;
-};
 </script>
 <template>
   <div class="a-layout">
@@ -214,29 +191,6 @@ const onClose = () => {
         :footer="null"
       />
     </Modal>
-    <a-drawer
-      v-if="visibleDrawer"
-      :visible="true"
-      title="菜单授权"
-      @close="onClose"
-    >
-      <template #extra>
-        <a-button type="primary" @click="onSave">保存</a-button>
-      </template>
-      <a-tree
-        v-model:selectedKeys="selectedKeys"
-        checkable
-        :default-expand-all="true"
-        :auto-expand-parent="true"
-        :tree-data="treeData"
-        :field-names="{
-          title: 'name',
-          key: 'id',
-          children: 'children',
-        }"
-      >
-      </a-tree>
-    </a-drawer>
   </div>
 </template>
 <style lang="scss" scoped>

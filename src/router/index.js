@@ -18,7 +18,7 @@ import { userStore } from "@/store";
 router.beforeEach(async (to, from, next) => {
   nProgress.start();
   const useUserStore = userStore();
-  if (!useUserStore.menus.length && localStorage.getItem("isAuthenticated")) {
+  if (!useUserStore.menus.length && localStorage.getItem("user")) {
     const routesObj = await useUserStore.getMenus();
     router.addRoute(routesObj);
   }
@@ -32,11 +32,11 @@ router.beforeEach(async (to, from, next) => {
       });
     }
   });
-  if (to.name !== "login" && !localStorage.getItem("isAuthenticated")) {
+  if (to.name !== "login" && !localStorage.getItem("user")) {
     next({ name: "login" });
   } else if (
     (to.name == "login" || to.name == undefined) &&
-    localStorage.getItem("isAuthenticated")
+    localStorage.getItem("user")
   ) {
     const path = location.hash.substring(1);
     if (path != "/home") {

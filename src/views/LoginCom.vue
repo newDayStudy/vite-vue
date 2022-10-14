@@ -2,6 +2,7 @@
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
 import { userStore } from "@/store";
+import { login } from "@/apis";
 const formState = reactive({
   username: "admin",
   password: "123456",
@@ -11,9 +12,16 @@ const useUserStore = userStore();
 const router = useRouter();
 const onFinish = async (values) => {
   console.log("Success:", values);
-  useUserStore.bindUser(true);
-  localStorage.setItem("isAuthenticated", true);
-  router.push("/home");
+  try {
+    const res = await login({
+      ...values,
+    });
+    useUserStore.bindUser(res.data);
+    localStorage.setItem("user", JSON.stringify(res.data));
+    router.push("/home");
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const onFinishFailed = (errorInfo) => {

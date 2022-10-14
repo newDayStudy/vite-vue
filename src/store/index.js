@@ -1,18 +1,42 @@
 import { defineStore } from "pinia";
-import { getMenuByUserId, setIp } from "@/apis";
+import { getMenus as getMenusApi, setIp, getRolesByRoleId } from "@/apis";
+import { flatten } from "@/utils";
 const modules = import.meta.glob("../views/**.vue");
-
+const handleMenusByUser = (permission, menus) => {
+  const permissionArray = permission.split(",").map(Number);
+  const allMenus = flatten(menus);
+  const userMenus = allMenus.filter((item) =>
+    permissionArray.includes(item.id)
+  );
+  // 所有父类Id
+  const allParentIds = Array.from(
+    new Set(userMenus.map((item) => item.parent_id))
+  );
+  // 所有父类数据
+  const allParentData = allMenus.filter((item) =>
+    allParentIds.includes(item.id)
+  );
+  return allParentData.map((item) => {
+    item.children = [];
+    userMenus.forEach((m) => {
+      if (m.parent_id == item.id) {
+        item.children.push(m);
+      }
+    });
+    return item;
+  });
+};
 export const userStore = defineStore("user", {
   state: () => {
     return {
-      isAuthenticated: localStorage.getItem("isAuthenticated") || false,
       menus: [],
       collapsed: false,
+      user: JSON.parse(localStorage.getItem("user")) || null,
     };
   },
   actions: {
-    bindUser(isAuthenticated) {
-      this.isAuthenticated = isAuthenticated;
+    bindUser(user) {
+      this.user = user;
     },
     getIP(callback) {
       const recode = {};
@@ -72,10 +96,14 @@ export const userStore = defineStore("user", {
     },
     async getMenus() {
       try {
-        const res = await getMenuByUserId({
-          id: 1,
+        const allMenu = await getMenusApi();
+        const userMenus = await getRolesByRoleId({
+          roleId: this.user.roleId,
         });
-        this.menus = res.data;
+        this.menus = handleMenusByUser(
+          userMenus.data[0].permission,
+          allMenu.data.records
+        );
         const routeObj = {
           path: "/home",
           name: "home",
