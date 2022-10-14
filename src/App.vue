@@ -37,7 +37,7 @@ watch(
       <!-- <img :src="src" alt=""> -->
       <div class="user">
         <a>{{ useUserStore.user?.username }}</a>
-        <span @click="logout">退出</span>
+        <a @click="logout">退出</a>
       </div>
     </a-layout-header>
     <a-layout-content
