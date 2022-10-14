@@ -12,6 +12,7 @@ const router = useRouter();
 const logout = () => {
   localStorage.clear();
   useUserStore.bindUser(null);
+  useUserStore.clearMenus();
   router.push("/login");
 };
 const padding = reactive({

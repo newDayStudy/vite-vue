@@ -38,6 +38,9 @@ export const userStore = defineStore("user", {
     bindUser(user) {
       this.user = user;
     },
+    clearMenus() {
+      this.menus = [];
+    },
     getIP(callback) {
       const recode = {};
       let RTCPeerConnection =
