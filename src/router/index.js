@@ -18,6 +18,7 @@ import { userStore } from "@/store";
 router.beforeEach(async (to, from, next) => {
   nProgress.start();
   const useUserStore = userStore();
+  // 权限设计问题，应该在用户登录时
   if (!useUserStore.menus.length && localStorage.getItem("user")) {
     const routesObj = await useUserStore.getMenus();
     router.addRoute(routesObj);
