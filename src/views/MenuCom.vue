@@ -32,6 +32,10 @@ const columns = reactive([
     dataIndex: "sort",
   },
   {
+    title: "创建时间",
+    dataIndex: "create_time",
+  },
+  {
     title: "操作",
     dataIndex: "action",
     align: "center",

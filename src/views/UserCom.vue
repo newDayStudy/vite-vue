@@ -21,22 +21,8 @@ const columns = reactive([
     dataIndex: "telephone",
   },
   {
-    title: "操作",
-    dataIndex: "action",
-    customRender({ text, record }) {
-      return h("div", [
-        h(
-          "a",
-          {
-            onClick() {
-              console.log(record);
-              visibleDrawer.value = true;
-            },
-          },
-          "菜单授权"
-        ),
-      ]);
-    },
+    title: "创建时间",
+    dataIndex: "create_time",
   },
 ]);
 const pagination = reactive({
