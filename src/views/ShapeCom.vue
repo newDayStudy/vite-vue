@@ -96,6 +96,7 @@ ul {
   list-style: none;
   width: 100px;
   height: 100px;
+  transition: transform 1s;
   transform: rotateX(-45deg) rotateY(40deg);
   li {
     position: absolute;

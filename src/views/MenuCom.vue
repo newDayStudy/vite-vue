@@ -1,64 +1,17 @@
 <script setup>
 import Table from "@/components/table/Table";
-import { getMenus, addMenu } from "@/apis";
+import { getMenus, addMenu, updateMenu, deleteMenu } from "@/apis";
 import { reactive, onMounted, ref, unref, getCurrentInstance, h } from "vue";
 import Modal from "@/components/modal";
 import BaseFormVue from "@/components/form/BaseForm";
 import { Divider } from "ant-design-vue";
 import { useModal } from "@/components/modal/hooks/useModal";
+import moment from "moment";
 const [register, { open, close }] = useModal();
 const currentInstance = getCurrentInstance();
 const notification =
   currentInstance.appContext.config.globalProperties.notification;
-const columns = reactive([
-  {
-    title: "菜单编号",
-    dataIndex: "code",
-  },
-  {
-    title: "菜单名称",
-    dataIndex: "name",
-  },
-  {
-    title: "菜单图标",
-    dataIndex: "icon",
-  },
-  {
-    title: "菜单路径",
-    dataIndex: "path",
-  },
-  {
-    title: "菜单排序",
-    dataIndex: "sort",
-  },
-  {
-    title: "创建时间",
-    dataIndex: "create_time",
-  },
-  {
-    title: "操作",
-    dataIndex: "action",
-    align: "center",
-    customRender({ record }) {
-      return h("div", [
-        h("a", {}, "编辑"),
-        record.parent_id == 0 &&
-          h(Divider, {
-            type: "vertical",
-          }),
-        record.parent_id == 0 &&
-          h("a", {
-            innerHTML: "新增",
-            onClick() {
-              open();
-              form.parent_id = record.id;
-            },
-          }),
-      ]);
-    },
-  },
-]);
-
+const modalTitle = ref("新增菜单");
 const dataSource = ref([]);
 const getMenuApi = async () => {
   try {
@@ -123,11 +76,7 @@ const formItems = reactive([
     type: "Input",
   },
 ]);
-
-onMounted(() => {
-  getMenuApi();
-});
-const form = reactive({
+const form = ref({
   icon: "",
   code: "",
   name: "",
@@ -136,11 +85,105 @@ const form = reactive({
   sort: "",
 });
 const formRef = ref();
+const columns = reactive([
+  {
+    title: "菜单编号",
+    dataIndex: "code",
+  },
+  {
+    title: "菜单名称",
+    dataIndex: "name",
+  },
+  {
+    title: "菜单图标",
+    dataIndex: "icon",
+  },
+  {
+    title: "菜单路径",
+    dataIndex: "path",
+  },
+  {
+    title: "菜单排序",
+    dataIndex: "sort",
+  },
+  {
+    title: "创建时间",
+    dataIndex: "create_time",
+    customRender({ text }) {
+      return moment(text).format("YYYY-MM-DD");
+    },
+  },
+  {
+    title: "操作",
+    dataIndex: "action",
+    align: "center",
+    customRender({ record }) {
+      return h("div", [
+        h(
+          "a",
+          {
+            onClick() {
+              modalTitle.value = "编辑菜单";
+              open();
+              form.value = { ...record };
+            },
+          },
+          "编辑"
+        ),
+        record.parent_id == 0 &&
+          h(Divider, {
+            type: "vertical",
+          }),
+        record.parent_id == 0 &&
+          h("a", {
+            innerHTML: "新增",
+            onClick() {
+              open();
+              form.value = {};
+              form.value.parent_id = record.id;
+            },
+          }),
+        record.parent_id != 0 &&
+          h(Divider, {
+            type: "vertical",
+          }),
+        record.parent_id != 0 &&
+          h(
+            "a",
+            {
+              onClick() {
+                deleteRow(record.id);
+              },
+            },
+            "删除"
+          ),
+      ]);
+    },
+  },
+]);
+
+onMounted(() => {
+  getMenuApi();
+});
+const deleteRow = async (id) => {
+  try {
+    const res = await deleteMenu({ id });
+    const { code, message } = res;
+    if (code == 200) {
+      getMenuApi();
+    }
+    notification.success({
+      description: message,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
 const callback = async () => {
   try {
     const values = await unref(formRef).$refs.ruleForm.validateFields();
-    if (form.parent_id) {
-      values.parent_id = form.parent_id;
+    if (form.value.parent_id) {
+      values.parent_id = form.value.parent_id;
     }
     console.log("values", values);
     addMenuApi(values);
@@ -152,13 +195,15 @@ const callback = async () => {
 
 const addMenuApi = async (params) => {
   try {
-    const res = await addMenu(params);
+    const res = form.value.id
+      ? await updateMenu({ ...params, id: form.value.id })
+      : await addMenu(params);
     const { code, message } = res;
     if (code == 200) {
       notification.success({
         description: message,
       });
-      form.parent_id = "";
+      form.value.parent_id = "";
       getMenuApi();
     }
   } catch (error) {
@@ -176,7 +221,7 @@ const addMenuApi = async (params) => {
       </a-form>
       <Table row-key="id" :columns="columns" :data-source="dataSource" />
     </a-card>
-    <Modal title="新增菜单" :submit="callback" @register="register">
+    <Modal :title="modalTitle" :submit="callback" @register="register">
       <BaseFormVue ref="formRef" v-model="form" :form-items="formItems" />
     </Modal>
   </a-layout>

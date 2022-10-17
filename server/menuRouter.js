@@ -85,11 +85,12 @@ router.post("/addMenu", (req, res) => {
   );
 });
 router.post("/updateMenu", (req, res) => {
-  const { name, icon, path, parent_id, token, filepath } = req.body;
+  const { name, icon, path, parent_id, id, filepath } = req.body;
   db(
-    `UPDATE menu_table SET name=${name}, icon=${icon}, path=${path}, parent_id=${parent_id},filepath=${filepath} WHERE token=${token}`,
+    `UPDATE menu_table SET name='${name}', icon='${icon}', path='${path}', parent_id='${parent_id}',filepath='${filepath}' WHERE id=${id}`,
     (err, data) => {
       if (err) {
+        console.log(err);
         res.json({
           code: 500,
           message: "Interval Server Error",

@@ -11,6 +11,8 @@ export const getUsers = (params) => http.post("/getUsers", params);
 export const addUser = (params) => http.post("/addUser", params);
 export const getMenus = (params) => http.get("/getMenus", params);
 export const addMenu = (params) => http.post("/addMenu", params);
+export const updateMenu = (params) => http.post("/updateMenu", params);
+export const deleteMenu = (params) => http.post("/deleteMenu", params);
 export const updateArticle = (params) => http.post("/updateArticle", params);
 export const getRoles = (params) => http.get("/getRoles", params);
 export const getMenuByUserId = (params) =>
