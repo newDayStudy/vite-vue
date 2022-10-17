@@ -2,9 +2,51 @@
 import { onMounted } from "vue";
 onMounted(() => {
   const oUl = document.querySelector(".shape");
-  document.addEventListener("mouseover", (e) => {
-    // oUl.style.transform = `rotateX(${e.layerX}deg) rotateY(${e.layerY}deg)`
-  });
+  // 角度初始化
+  let RotateY = 0;
+  let RotateX = 0;
+
+  // 用个变量来拦截onmousemove，
+  let flag = false;
+
+  // 起点位置
+  let old_x = 0;
+  let old_y = 0;
+  document.onmousedown = function (e) {
+    flag = true;
+    // 按下鼠标时，记录起点位置
+    old_x = e.pageX;
+    old_y = e.pageY;
+  };
+  document.onmousemove = function (e) {
+    // 必须是按下后移动才有效果
+    if (flag) {
+      /**
+       * 新位置减去老位置
+       * 得到鼠标移动的X/Y距离
+       */
+      const _x = e.pageX - old_x;
+      const _y = e.pageY - old_y;
+
+      /**
+       * 除以70得到需要旋转的角度
+       * 除数越大，鼠标移动后旋转的角度越小，
+       * 相反，除数是1，鼠标轻轻拖动，也会旋转的非常厉害
+       */
+      RotateY += _x / 70;
+      RotateX += -(_y / 70);
+      /**
+       * 添加transform，盒子进行3D旋转
+       */
+      oUl.style.transition = "linear";
+      oUl.style.transform =
+        "rotateX(" + RotateX + "deg) rotateY(" + RotateY + "deg)";
+    }
+  };
+  document.onmouseup = function () {
+    flag = false;
+    // 鼠标抬起时结束
+  };
 });
 </script>
 
@@ -13,12 +55,14 @@ onMounted(() => {
     <a-row gutter="12">
       <a-col span="12">
         <ul class="shape">
-          <li>前</li>
-          <li>后</li>
-          <li>左</li>
-          <li>右</li>
-          <li>上</li>
-          <li>下</li>
+          <li>
+            <img src="@/assets/images/th.jpg" alt="" />
+          </li>
+          <li><img src="@/assets/images/th1.jpg" alt="" /></li>
+          <li><img src="@/assets/images/th2.jpg" alt="" /></li>
+          <li><img src="@/assets/images/th3.jpg" alt="" /></li>
+          <li><img src="@/assets/images/th4.jpg" alt="" /></li>
+          <li><img src="@/assets/images/th5.jpg" alt="" /></li>
         </ul>
       </a-col>
       <a-col span="12">
@@ -52,8 +96,6 @@ ul {
   list-style: none;
   width: 100px;
   height: 100px;
-  transition: 1s;
-  transform-origin: center;
   transform: rotateX(-45deg) rotateY(40deg);
   li {
     position: absolute;
@@ -84,6 +126,11 @@ ul {
     }
     &:nth-child(6) {
       transform: translateY(50px) rotateX(90deg);
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      vertical-align: middle;
     }
   }
   &.shape1 {
