@@ -23,6 +23,7 @@ import {
   Select,
   Drawer,
   Tree,
+  Calendar,
 } from "ant-design-vue";
 
 import {
@@ -37,6 +38,7 @@ function antdRegisterComponent(app) {
     .component("file-add-outlined", FileAddOutlined);
 
   app
+    .use(Calendar)
     .use(Tree)
     .use(Drawer)
     .use(Select)

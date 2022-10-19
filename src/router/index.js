@@ -25,7 +25,7 @@ router.beforeEach(async (to, from, next) => {
   }
   // 记录ip地址
   useUserStore.getIP((ip) => {
-    if (to.meta.pathname) {
+    if (to.meta.pathname != "") {
       useUserStore.setIp({
         ip,
         pathname: to.meta.pathname,
