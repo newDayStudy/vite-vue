@@ -49,5 +49,9 @@ router.beforeEach(async (to, from, next) => {
   }
 });
 router.afterEach((to, from) => {
+  if (to.path != "/login" && to.path != "") {
+    const useUserStore = userStore();
+    useUserStore.setTabPanel(to);
+  }
   nProgress.done();
 });

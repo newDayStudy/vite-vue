@@ -32,6 +32,16 @@ export const userStore = defineStore("user", {
       menus: [],
       collapsed: false,
       user: JSON.parse(localStorage.getItem("user")) || null,
+      tabs: [
+        {
+          path: "",
+          name: "home",
+          meta: {
+            pathname: "首页",
+          },
+        },
+      ],
+      activeKey: "home",
     };
   },
   actions: {
@@ -135,6 +145,17 @@ export const userStore = defineStore("user", {
     },
     async setIp(params) {
       await setIp(params);
+    },
+    setTabPanel(path) {
+      const index = this.tabs.findIndex((item) => item.name == path.name);
+      this.activeKey = path.name;
+      if (index < 0) {
+        this.tabs.push(path);
+      }
+    },
+    clearPanel(path) {
+      const index = this.tabs.findIndex((item) => item.name == path.name);
+      this.tabs.splice(index, 1);
     },
   },
 });

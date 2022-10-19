@@ -1,13 +1,13 @@
 <script setup>
 import { ref, watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { userStore } from "../store";
 import { flatten } from "@/utils";
 const route = useRoute();
+const router = useRouter();
 const useUserStore = userStore();
 const selectedKeys = ref([]);
 const openKeys = ref([]);
-
 const allMenus = flatten(useUserStore.menus);
 watch(
   () => route,
@@ -20,6 +20,12 @@ watch(
     }
   },
   { deep: true, immediate: true }
+);
+watch(
+  () => useUserStore.activeKey,
+  (v) => {
+    router.push("/" + v);
+  }
 );
 </script>
 
@@ -44,10 +50,25 @@ watch(
       </a-menu>
     </a-layout-sider>
     <a-layout-content>
-      <router-view v-if="route.name != 'home'"></router-view>
-      <a-layout v-else>
-        <h1 class="welcome">欢迎进入<i>Welcome</i></h1>
-      </a-layout>
+      <a-tabs
+        v-model:activeKey="useUserStore.activeKey"
+        type="card"
+        tab-position="top"
+        :tab-bar-gutter="0"
+      >
+        <a-tab-pane
+          v-for="item in useUserStore.tabs"
+          :key="item.name"
+          :tab="item.meta?.pathname"
+          :closable="item.code != 'home'"
+        ></a-tab-pane>
+      </a-tabs>
+      <div>
+        <router-view v-if="route.name != 'home'"></router-view>
+        <a-layout v-else>
+          <h1 class="welcome">欢迎进入<i>Welcome</i></h1>
+        </a-layout>
+      </div>
     </a-layout-content>
   </a-layout>
 </template>
