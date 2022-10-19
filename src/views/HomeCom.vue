@@ -27,6 +27,9 @@ watch(
     router.push("/" + v);
   }
 );
+const onEdit = (targetKey, action) => {
+  useUserStore.clearPanel(router, targetKey);
+};
 </script>
 
 <template>
@@ -52,15 +55,17 @@ watch(
     <a-layout-content>
       <a-tabs
         v-model:activeKey="useUserStore.activeKey"
-        type="card"
         tab-position="top"
         :tab-bar-gutter="0"
+        hide-add
+        type="editable-card"
+        @edit="onEdit"
       >
         <a-tab-pane
           v-for="item in useUserStore.tabs"
           :key="item.name"
           :tab="item.meta?.pathname"
-          :closable="item.code != 'home'"
+          :closable="item.name != 'home'"
         ></a-tab-pane>
       </a-tabs>
       <div>

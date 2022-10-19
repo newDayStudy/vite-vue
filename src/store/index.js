@@ -153,9 +153,10 @@ export const userStore = defineStore("user", {
         this.tabs.push(path);
       }
     },
-    clearPanel(path) {
-      const index = this.tabs.findIndex((item) => item.name == path.name);
-      this.tabs.splice(index, 1);
+    clearPanel(router, targetKey) {
+      const tabs = this.tabs.filter((item) => item.name != targetKey);
+      this.tabs = [...tabs];
+      router.push("/" + tabs[tabs.length - 1].name);
     },
   },
 });
