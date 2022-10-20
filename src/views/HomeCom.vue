@@ -53,21 +53,24 @@ const onEdit = (targetKey, action) => {
       </a-menu>
     </a-layout-sider>
     <a-layout-content>
-      <a-tabs
-        v-model:activeKey="useUserStore.activeKey"
-        tab-position="top"
-        :tab-bar-gutter="0"
-        hide-add
-        type="editable-card"
-        @edit="onEdit"
-      >
-        <a-tab-pane
-          v-for="item in useUserStore.tabs"
-          :key="item.name"
-          :tab="item.meta?.pathname"
-          :closable="item.name != 'home'"
-        ></a-tab-pane>
-      </a-tabs>
+      <div class="tabs">
+        <a-tabs
+          v-model:activeKey="useUserStore.activeKey"
+          tab-position="top"
+          :tab-bar-gutter="0"
+          hide-add
+          type="editable-card"
+          @edit="onEdit"
+        >
+          <a-tab-pane
+            v-for="item in useUserStore.tabs"
+            :key="item.name"
+            :tab="item.meta?.pathname"
+            :closable="item.name != 'home'"
+          ></a-tab-pane>
+        </a-tabs>
+      </div>
+
       <div>
         <router-view v-if="route.name != 'home'"></router-view>
         <a-layout v-else>
@@ -86,6 +89,12 @@ const onEdit = (targetKey, action) => {
   i {
     font-size: 14px;
     font-style: normal;
+  }
+}
+.tabs {
+  background-image: linear-gradient(top, #fff, #ccc);
+  :deep() .ant-tabs-nav {
+    margin: 0;
   }
 }
 </style>
