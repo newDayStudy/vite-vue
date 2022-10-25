@@ -25,6 +25,9 @@ watch(
     console.log("padding", padding);
   }
 );
+const onCollapsed = () => {
+  useUserStore.changeCollapsed();
+};
 // const logo = new URL('/src/assets/logo.png', import.meta.url).href
 </script>
 
@@ -33,7 +36,16 @@ watch(
     <a-layout-header v-if="useUserStore.user" class="a-layout-header">
       <!-- <img :src="logo" width="30"/> -->
       <!-- <img src="@/assets/logo.png" width="30" height="30" /> -->
-      <span style="color: #fff; font-size: 18px">Vite+Vue3+Antdv</span>
+      <div>
+        <span style="color: #fff; font-size: 18px">Vite+Vue3+Antdv</span>
+        <a style="margin-left: 20px" @click="onCollapsed">
+          <MenuUnfoldOutlined
+            v-if="useUserStore.collapsed"
+            style="color: #fff; font-size: 20px"
+          />
+          <MenuFoldOutlined v-else style="color: #fff; font-size: 20px" />
+        </a>
+      </div>
       <!-- <img :src="src" alt=""> -->
       <div class="user">
         <a>{{ useUserStore.user?.username }}</a>

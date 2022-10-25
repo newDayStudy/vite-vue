@@ -31,10 +31,14 @@ import {
   UserOutlined,
   BorderlessTableOutlined,
   FileAddOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
 } from "@ant-design/icons-vue";
 function antdRegisterComponent(app) {
   app
     .component("UserOutlined", UserOutlined)
+    .component("MenuFoldOutlined", MenuFoldOutlined)
+    .component("MenuUnfoldOutlined", MenuUnfoldOutlined)
     .component("borderless-table-outlined", BorderlessTableOutlined)
     .component("file-add-outlined", FileAddOutlined);
 

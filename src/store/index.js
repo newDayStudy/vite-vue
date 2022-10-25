@@ -45,6 +45,9 @@ export const userStore = defineStore("user", {
     };
   },
   actions: {
+    changeCollapsed() {
+      this.collapsed = !this.collapsed;
+    },
     bindUser(user) {
       this.user = user;
     },
