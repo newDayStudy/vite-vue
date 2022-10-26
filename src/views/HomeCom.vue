@@ -52,8 +52,8 @@ const onEdit = (targetKey, action) => {
         </a-sub-menu>
       </a-menu>
     </a-layout-sider>
-    <a-layout-content>
-      <div class="tabs">
+    <a-layout-content style="height: 100%; overflow: auto">
+      <div class="tabs" style="position: fixed; z-index: 1111; width: 100%">
         <a-tabs
           v-model:activeKey="useUserStore.activeKey"
           tab-position="top"
@@ -71,7 +71,7 @@ const onEdit = (targetKey, action) => {
         </a-tabs>
       </div>
 
-      <div>
+      <div style="padding-top: 35px">
         <router-view v-if="route.name != 'home'"></router-view>
         <a-layout v-else>
           <h1 class="welcome">欢迎进入<i>Welcome</i></h1>
