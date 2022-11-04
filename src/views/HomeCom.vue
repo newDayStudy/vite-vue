@@ -53,7 +53,7 @@ const onEdit = (targetKey, action) => {
       </a-menu>
     </a-layout-sider>
     <a-layout-content style="height: 100%; overflow: auto">
-      <div class="tabs" style="position: fixed; z-index: 1111; width: 100%">
+      <div class="tabs" style="position: fixed; z-index: 1; width: 100%">
         <a-tabs
           v-model:activeKey="useUserStore.activeKey"
           tab-position="top"
@@ -92,7 +92,7 @@ const onEdit = (targetKey, action) => {
   }
 }
 .tabs {
-  background-image: linear-gradient(top, #fff, #ccc);
+  background-image: linear-gradient(#fff, #ccc);
   :deep() .ant-tabs-nav {
     margin: 0;
   }
