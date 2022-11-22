@@ -1,15 +1,20 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const app = express();
-
+const cors = require("cors");
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
+app.use(cookieParser());
 app.use("*", (req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  // res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Content-Type");
   res.header("Access-Control-Allow-Methods", "*");
+  // res.header('Access-Control-Allow-Credentials', true)
   res.header("Content-Type", "application/json;charset=utf-8");
+  console.log(req.headers.cookie);
+  res.cookie("token", "1231321321");
   if (res.method === "OPTIONS") res.send(200);
   next();
 });

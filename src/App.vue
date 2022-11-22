@@ -54,7 +54,7 @@ const onCollapsed = () => {
     </a-layout-header>
     <a-layout-content
       class="a-layout-content"
-      :class="{ 'a-layout-content__active': useUserStore.isAuthenticated }"
+      :class="{ 'a-layout-content__active': useUserStore.user }"
     >
       <router-view></router-view>
     </a-layout-content>
@@ -87,13 +87,12 @@ body {
   height: 100%;
 }
 .a-layout-content__active {
-  height: calc(100% - 60px);
+  height: calc(100% - 64px);
 }
 .a-layout-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  // background-color: #fff;
   img {
     flex: none;
   }

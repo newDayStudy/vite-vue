@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>分享测试</title>
+  </head>
+  <body>
+    <button id="btn">点击分享</button>
+    <script>
+      window.onload = function () {
+        document.getElementById("btn").onclick = function () {
+          if (navigator.canShare) {
+            navigator.share({
+              title: document.title,
+              text: "Hello World",
+              url: "https://developer.mozilla.org",
+            });
+          }
+        };
+
+        document.addEventListener("visibilitychange", function () {
+          console.log(this.visibilityState);
+        });
+      };
+    </script>
+  </body>
+</html>

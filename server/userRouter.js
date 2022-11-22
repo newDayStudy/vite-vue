@@ -7,6 +7,8 @@ const fs = require("fs");
 const path = require("path");
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
+  console.log(req.headers.cookie);
+  // res.cookie('name', '1231', {maxAge: 900000, domain: 'www.baidu.com'})
   db(
     `SELECT * FROM user_table WHERE username='${username}' and password='${password}'`,
     (err, data) => {
