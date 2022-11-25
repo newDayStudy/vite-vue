@@ -34,6 +34,7 @@
     "mysql": "^2.18.1",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.22",
+    "sortablejs": "^1.15.0",
     "vant": "^3.4.5",
     "vue": "^3.2.25",
     "vue-router": "4",
