@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>分片上传</title>
   </head>
   <body>
     <input type="file" id="file" />
@@ -13,16 +13,39 @@
       fileEle.addEventListener("change", (e) => {
         const file = e.target.files[0];
         const fileReader = new FileReader();
+        const chunk = 1024 * 1024;
+        const totalChunkSize = file.size;
+        let chunkNumber = parseInt(totalChunkSize / chunk);
+        const remain = totalChunkSize % chunk;
+        chunkNumber = chunkNumber + (remain > 0 ? 1 : 0);
         fileReader.onload = (e) => {
-          // const blob = File.prototype.slice.call(file, 0, 20)
-          // const newFile = new File([blob], '新的文件名.text')
-          // console.log(newFile)
+          for (let i = 0; i < chunkNumber; i++) {
+            const blob = File.prototype.slice.call(
+              file,
+              (i - 1 < 0 ? 0 : i - 1) * chunk,
+              i * chunk
+            );
+            const newFileName = `文档${i}.txt`;
+            const newFile = new File([blob], newFileName);
+            console.log(newFile);
+            download(blob, newFileName);
+          }
         };
         fileReader.onerror = (e) => {
           console.log("读取文件失败", e);
         };
         fileReader.readAsArrayBuffer(file);
       });
+      function download(blob, fileName) {
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.download = fileName;
+        a.href = URL.createObjectURL(blob);
+        document.body.appendChild(a);
+        a.click();
+        URL.revokeObjectURL(a.href);
+        document.body.removeChild(a);
+      }
     </script>
   </body>
 </html>
