@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="./lib/require/require-2.1.1.js"></script>
+    <script>
+      require.config({
+        baseUrl: "/html/",
+        paths: {
+          jquery: "lib/jquery/jquery-2.1.4",
+          underscore: "lib/underscore/underscore-1.4.2",
+          backbone: "lib/backbone/backbone-0.9.2",
+          text: "lib/require/plugins/text-2.0.3", // 处理引入的html文件
+          ui: "lib/amazeui.min",
+        },
+        shim: {
+          underscore: {
+            exports: "_",
+          },
+          backbone: {
+            deps: ["underscore"],
+            exports: "Backbone",
+          },
+        },
+      });
+
+      require([
+        "jquery",
+        "underscore",
+        "backbone",
+        "ui",
+        "text!./2.html",
+      ], function ($, _, B, ui, _text) {
+        console.log(ui);
+        $("#app").html("hello require.js");
+        console.log(_.template);
+        const bodyView = B.View.extend({
+          template: _.template(_text),
+          render: function () {
+            this.$el.html(this.template());
+            return this;
+          },
+        });
+
+        const bodyRender = new bodyView({ el: $("#app") });
+        setTimeout(function () {
+          bodyRender.render();
+        }, 2000);
+      });
+    </script>
+  </body>
+</html>

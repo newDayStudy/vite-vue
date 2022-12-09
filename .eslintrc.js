@@ -34,16 +34,16 @@ module.exports = {
      * 最佳实践
      */
     eqeqeq: 2, // 强制使用 === 和 !==
-    "default-case": 1, // 要求 switch 语句中有 default 分支
+    "default-case": 0, // 要求 switch 语句中有 default 分支
     "no-else-return": 1, // 禁止 if 语句中 return 语句之后有 else 块
     // "no-empty-function": 1, // 禁止出现空函数
     "no-multi-spaces": 1, // 禁止使用多个空格
-    radix: 1, // 强制在parseInt()使用基数参数
+    radix: 0, // 强制在parseInt()使用基数参数
     eqeqeq: ["off"],
     /**
      * 变量声明
      */
-    "init-declarations": ["error", "always"], // 声明变量必须赋值
+    // "init-declarations": ["error", "always"], // 声明变量必须赋值
     /**
      * ECMAScript6
      */
@@ -54,11 +54,11 @@ module.exports = {
         after: true,
       },
     ], // 强制箭头函数的箭头前后使用空格
-    "no-var": 2, // 禁止使用 var 声明变量
+    "no-var": 0, // 禁止使用 var 声明变量
     "object-shorthand": 2, // 要求使用对象方法名和属性名简写
     "prefer-arrow-callback": 2, // 要求回调函数使用箭头函数
-    "prefer-const": 2, // 使用 const 声明那些声明后不再被修改的变量
-    "prefer-rest-params": 2, // 要求使用剩余参数而不是 arguments
+    "prefer-const": 0, // 使用 const 声明那些声明后不再被修改的变量
+    "prefer-rest-params": 0, // 要求使用剩余参数而不是 arguments
     /**
      * 风格指南
      */
