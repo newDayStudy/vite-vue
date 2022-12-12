@@ -1,0 +1,48 @@
+<div id="container">
+  <h3><%=title %></h3>
+  <p>
+    <a href="backbone1.html">跳转新页面</a>
+  </p>
+  <p>
+    <button type="button" class="btn am-btn am-btn-primary">打开modal</button>
+  </p>
+
+  <div class="am-alert">
+    没什么可给你，但求凭这阙歌。谢谢你风雨里，都不退愿陪着我。
+  </div>
+  <div class="am-form">
+    <fieldset>
+      <div class="am-form-group">
+        <input
+          type="text"
+          class=""
+          id="doc-ipt-email-1"
+          placeholder="输入话题"
+        />
+      </div>
+      <p>
+        <button class="am-btn am-btn-default" id="submit">提交</button>
+        <button class="am-btn am-btn-primary" id="view">查看数据</button>
+      </p>
+    </fieldset>
+  </div>
+  <ul class="am-list confirm-list" id="doc-modal-list">
+    <% if (list) { %> <% _.each(list, function(item, index){%>
+    <li>
+      <a data-id="<%" ="index%"> href="#"><%=item %></a
+      ><i class="am-icon-close"></i>
+    </li>
+    <%})%> <% } %>
+  </ul>
+
+  <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
+    <div class="am-modal-dialog">
+      <div class="am-modal-hd">Amaze UI</div>
+      <div class="am-modal-bd">你，确定要删除这条记录吗？</div>
+      <div class="am-modal-footer">
+        <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+        <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+      </div>
+    </div>
+  </div>
+</div>

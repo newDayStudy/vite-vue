@@ -1,0 +1,10 @@
+#container {
+  max-width: 1120px;
+  margin: auto;
+}
+
+.am-list > li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

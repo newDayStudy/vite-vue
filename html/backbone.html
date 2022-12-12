@@ -8,9 +8,7 @@
   </head>
   <body>
     <div id="app"></div>
-    <div class="am-alert">
-      没什么可给你，但求凭这阙歌。谢谢你风雨里，都不退愿陪着我。
-    </div>
+
     <script src="./lib/require/require-2.1.1.js"></script>
     <script>
       require.config({
@@ -33,7 +31,7 @@
             exports: "Backbone",
           },
           ui: {
-            deps: ["jquery", "css!lib/amazeui.min"], // 先加载css.js文件再加载css文件
+            deps: ["jquery", "css!lib/amazeui.min", "css!lib/css/app"], // 先加载css.js文件再加载css文件
           },
         },
       });
@@ -42,16 +40,81 @@
           console.log("domReady");
         });
       });
-      require(["jquery", "underscore", "backbone", "ui"], function (
-        $,
-        _,
-        B,
-        ui,
-        _text
-      ) {
-        $("#app").html(
-          `hello require.js<a href='backbone1.html'>跳转新页面</a><button type="button" class="am-btn am-btn-default">打开modal</button>`
-        );
+      require([
+        "jquery",
+        "underscore",
+        "backbone",
+        "ui",
+        "text!template/index.html",
+      ], function ($, _, B, ui, _text) {
+        const BodyModel = B.Model.extend({
+          defaults: function () {
+            return [
+              "每个人都有一个死角， 自己走不出来，别人也闯不进去。",
+              "我把最深沉的秘密放在那里。",
+              "你不懂我，我不怪你。",
+              "每个人都有一道伤口， 或深或浅，盖上布，以为不存在。",
+            ];
+          },
+        });
+
+        const AppCollection = B.Collection.extend({
+          model: BodyModel,
+        });
+
+        const appCollection = new AppCollection();
+        const bodyModel = new BodyModel();
+        const AppView = B.View.extend({
+          el: $("#app"),
+          model: bodyModel,
+          template: _.template(_text),
+          initialize: function () {},
+          events: {
+            "click #submit": "submit",
+            "click .btn": "openModal",
+            "click #view": "view",
+          },
+          render: function () {
+            console.log(this.model);
+            $(this.el).html(
+              this.template({
+                title: "hello backbone.js",
+                list: this.model.attributes,
+              })
+            );
+          },
+          view() {
+            console.log(Object.values(this.model.attributes));
+          },
+          openModal() {
+            $("#my-confirm").modal({
+              relatedTarget: this,
+              onConfirm: function (options) {
+                var $link = $(this.relatedTarget).prev("a");
+                var msg = $link.length
+                  ? "你要删除的链接 ID 为 " + $link.data("id")
+                  : "确定了，但不知道要整哪样";
+                console.log(msg);
+              },
+              onCancel: function () {
+                console.log("算了");
+              },
+            });
+          },
+          submit() {
+            const inputValue = $("#doc-ipt-email-1").val();
+            if (inputValue) {
+              const length = Object.keys(this.model.attributes).length;
+              console.log(length);
+              this.model.set(length, inputValue);
+              $("#doc-modal-list").append(`
+                  <li><a data-id=${length} href="#">${inputValue}</a><i class="am-icon-close"></i></li>
+                `);
+            }
+          },
+        });
+        const App = new AppView();
+        App.render();
       });
     </script>
   </body>
