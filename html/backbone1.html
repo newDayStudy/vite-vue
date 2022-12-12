@@ -5,24 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="" />
   </head>
   <body>
     <div id="app"></div>
-    <div class="am-alert">
-      没什么可给你，但求凭这阙歌。谢谢你风雨里，都不退愿陪着我。
-    </div>
     <script src="./lib/require/require-2.1.1.js"></script>
     <script>
       require.config({
         baseUrl: "/html/",
         paths: {
-          domReady: "lib/require/plugins/domReady-2.0.1",
           jquery: "lib/jquery/jquery-2.1.4",
           underscore: "lib/underscore/underscore-1.4.2",
           backbone: "lib/backbone/backbone-0.9.2",
           text: "lib/require/plugins/text-2.0.3", // 处理引入的html文件
           ui: "lib/amazeui.min",
-          css: "lib/css",
         },
         shim: {
           underscore: {
@@ -32,26 +28,28 @@
             deps: ["underscore"],
             exports: "Backbone",
           },
-          ui: {
-            deps: ["jquery", "css!lib/amazeui.min"],
-          },
         },
       });
-      require(["domReady"], function (domReady) {
-        domReady(function () {
-          console.log("domReady");
+
+      require([
+        "jquery",
+        "underscore",
+        "backbone",
+        "ui",
+        "text!./2.html",
+      ], function ($, _, B, ui, _text) {
+        const bodyView = B.View.extend({
+          template: _.template(_text),
+          render: function () {
+            this.$el.html(this.template({ test: "测试1" }));
+            return this;
+          },
         });
-      });
-      require(["jquery", "underscore", "backbone", "ui"], function (
-        $,
-        _,
-        B,
-        ui,
-        _text
-      ) {
-        $("#app").html(
-          `hello require.js<a href='backbone1.html'>跳转新页面</a><button type="button" class="am-btn am-btn-default">打开modal</button>`
-        );
+
+        const bodyRender = new bodyView({ el: $("#app") });
+        setTimeout(function () {
+          bodyRender.render();
+        }, 2000);
       });
     </script>
   </body>
