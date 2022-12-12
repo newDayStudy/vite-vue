@@ -22,7 +22,7 @@
           backbone: "lib/backbone/backbone-0.9.2",
           text: "lib/require/plugins/text-2.0.3", // 处理引入的html文件
           ui: "lib/amazeui.min",
-          css: "lib/css",
+          css: "lib/css", // 处理css文件
         },
         shim: {
           underscore: {
@@ -33,7 +33,7 @@
             exports: "Backbone",
           },
           ui: {
-            deps: ["jquery", "css!lib/amazeui.min"],
+            deps: ["jquery", "css!lib/amazeui.min"], // 先加载css.js文件再加载css文件
           },
         },
       });
